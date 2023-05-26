@@ -5,5 +5,7 @@ urlpatterns = [
     path('registrarUsuario/',views.registrarUsuario),
     path('edicionUsuario/<idUsuario>',views.edicionUsuario),
     path('editarUsuario/',views.editarUsuario),
-    path('eliminarUsuario/<idUsuario>',views.eliminarUsuario)
+    path('eliminarUsuario/<idUsuario>',views.eliminarUsuario),
+    path('gestionarMiembros/',views.manage),
+    path('login/',views.mostrarLogin)
 ]

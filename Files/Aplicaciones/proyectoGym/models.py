@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.hashers import * 
 # Create your models here.
 
 # Este modelo esta basado en MTV (Model, template, view)
