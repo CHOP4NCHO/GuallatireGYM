@@ -1,17 +1,17 @@
 {% extends "./base.html"%}
 {% block title%} Gestion de miembros {%endblock%}
 
-{%block body%}
+{% block body %}
 <div class ="row">
     <div class = "col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        {%if messages %}
-        {%for message in messages%}
+        {% if messages %}
+        {% for message in messages %}
         <div class="alert alert-success alert-dismissible">
             <button type = "button" class="btn-close" aria-label="Close"data-dismiss="alert">&times;</button>
             <strong class="text-dark">{{message}}</strong>
         </div>
-        {%endfor%}
-        {%endif%}
+        {% endfor %}
+        {% endif %}
         <h2>Gestion de miembros</h2>
         <div class ="card">
             <div class ="card-body"></div>
@@ -53,7 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for u in Usuarios%}
+                    {% for u in Usuarios %}
                     <tr>
                         <td>{{u.idUsuario}}</td>
                         <td>{{u.nombre}}</td>
@@ -65,9 +65,9 @@
                         <td><a href="edicionUsuario/{{u.idUsuario}}" class="btn btn-info">Editar</a></td>
                         <td><a href="eliminarUsuario/{{u.idUsuario}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
                     </tr>
-                    {%endfor%}
+                    {% endfor %}
                 </tbody>
         </div>
     </div>
 </div>
-{%endblock%}
+{% endblock %}

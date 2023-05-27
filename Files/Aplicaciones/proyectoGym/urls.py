@@ -7,5 +7,5 @@ urlpatterns = [
     path('editarUsuario/',views.editarUsuario),
     path('eliminarUsuario/<idUsuario>',views.eliminarUsuario),
     path('gestionarMiembros/',views.manage),
-    path('login/',views.mostrarLogin)
+    path('login/',views.showLogin)
 ]
