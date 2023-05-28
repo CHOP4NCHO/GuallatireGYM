@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.utils.datastructures import MultiValueDictKeyError
+from django.views.decorators.csrf import csrf_protect
 
 
 # Create your views here.
@@ -30,8 +31,10 @@ def showLogin(request):
                         if (usuario.rol == "Cliente"):
                                 return render(request,'home.html',{"usuario":usuario})
                         elif (usuario.rol == "Entrenador"):
+                                return render(request,'home.html',{"usuario":usuario})
+                        elif (usuario.rol == "Administrador"):
                                 usuarios = Usuarios.objects.all()
-                                return render(request,'gestionMiembros.html',{"Usuarios":usuarios}) 
+                                return render(request, "gestionMiembros.html",{"Usuarios":usuarios})
                 except:
                         messages.error(request,"Este usuario no existe")
                 
@@ -59,7 +62,7 @@ def registrarUsuario(request):
         except MultiValueDictKeyError:
                 entrenador = ""
         if(checkBlank([nombre,apellido,correo,contraseña,rol])):
-               messages.success(request,'Algun campo esta mal escroto')  
+               messages.success(request,'Algun campo esta mal escrito')  
         else:
                 usuario = Usuarios.objects.create(
                 rut = rut,
@@ -76,7 +79,10 @@ def registrarUsuario(request):
 
 def edicionUsuario(request,idUsuario):
         usuario = Usuarios.objects.get(idUsuario = idUsuario)
-        return render(request, "edicionUsuario.html",{"usuario":usuario})
+        entrenadores = Usuarios.objects.filter(rol="Entrenador")                               # Para obtener todos los usuarios de la base de datos
+        return render(request, "edicionUsuario.html",{"usuario":usuario,"Entrenadores":entrenadores})
+      
+
     
 def editarUsuario(request):
         idUsuario = request.POST['id']
@@ -85,14 +91,17 @@ def editarUsuario(request):
         correo = request.POST['correo']
         contraseña= request.POST['contraseña']
         rol = request.POST['rol']
-
+        entrenador = request.POST['entrenador']
+        if (entrenador == "..."):
+                entrenador = ""
         usuario = Usuarios.objects.get(idUsuario = idUsuario)
 
         usuario.nombre = nombre
         usuario.apellido = apellido
         usuario.correo = correo
         usuario.contraseña = contraseña
-        usuario.rol = rol 
+        usuario.rol = rol
+        usuario.entrenador = entrenador
         usuario.save()
         messages.success(request,"Usuario editado")
 
@@ -113,3 +122,13 @@ def checkBlank(info=[]):
                         blank = True
                 else:
                         return blank
+@csrf_protect
+def modificarTarjeta(request):
+        tarjeta = request.POST['tarjeta']
+        id = request.POST['idTarjeta']
+        usuario = Usuarios.objects.get(idUsuario = id)
+        usuario.tarjeta = tarjeta
+        usuario.save()
+        return redirect('/gestionarMiembros/')
+
+        

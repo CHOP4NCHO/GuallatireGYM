@@ -31,25 +31,26 @@
       </div> 
       <div class="form-group col-md-4">
         <label for="inputState">Rol</label>
-        <select name="rol" class="form-control">
-          <option selected>Selecione un rol</option>
+        <select onchange="mostrarEntrenador(this)" id ="rol"name="rol" class="form-control">
+          <option selected >Selecione un rol</option>
           <option value ="Cliente">Cliente</option>
           <option value ="Entrenador">Entrenador</option>
         </select>
       </div>
       <br>
       <div class="form-group col-md-2">
-        <label>Entrenador asignado</label>
+        <label id="labelEntrenador">Entrenador asignado</label>
         <select name="entrenador" id="entrenador" class="form-select">
+        <option value="">...</option>
         {%for i in Entrenadores%}
-        <option value="cualquiera">{{i.nombre}}</option>
+        <option value="{{i.nombre}}">{{i.nombre}}</option>
         {%endfor%}
         </select>
         <button type="submit" class="btn btn-dark" style="margin-top:20px;">Agregar miembro</button><br><br><br>
       </div>
     </div>
   </form>
-<div class="d-xxl-flex justify-content-center">
+<div class="d-xxl-flex justify-content-center" style="margin-bottom: 200px;">
     <div class = "col-xl-12 col-xl-6 col-xl-8 col-xl-8">
         <div class ="table-responsive">
             <table class="table table-bordered">
@@ -83,7 +84,7 @@
                         <td>{{u.rol}}</td>
                         <td>{{u.contraseña}}</td>
                         <td>{{u.entrenador}}</td>
-                        <td>{{u.tarjeta}}</td>
+                        <td><button id="{{u.tarjeta}}"type="button" onclick="obtenerInfo('{{u}}')" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Modificar</button></td>
                         {%if u.activo%}
                         <td>Activo</td>
                         {%else%}
@@ -92,10 +93,94 @@
                         <td><a href="/edicionUsuario/{{u.idUsuario}}" class="btn btn-info">Editar</a></td>
                         <td><a href="/eliminarUsuario/{{u.idUsuario}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
                     </tr>
-                    {%endfor%}
                 </tbody>
         </div>
     </div>
 </div>
-
+{%endfor%}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Informacion de tarjeta</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/modificarTarjeta/" method="POST"> {%csrf_token%}
+          <div class="mb-3" style="display:none;">
+            <input type="text" id ="idTarjeta"name="idTarjeta" value="" readonly class="form-control" >
+        </div>
+          <div class="form-group owner">
+            <label for="owner">Nombre cliente</label>
+            <input id ="nameTarjeta"type="text"class="form-control">
+        </div>
+        <div class="form-group CVV">
+            <label for="cvv">CVV</label>
+            <input type="text" class="form-control" id="cvv" placeholder="123">
+        </div>
+        <div class="form-group">
+            <label>Numero de tarjeta</label>
+            <input type="text" id ="tarjeta"class="form-control" name="tarjeta" placeholder="0000-1111-2222-3333">
+        </div>
+        <div class="form-group" id="expiration-date"><br>
+            <label>Fecha de expiracion</label>
+            <select>
+                <option value="01">Enero</option>
+                <option value="02">Febrero </option>
+                <option value="03">Marzo</option>
+                <option value="04">Abril</option>
+                <option value="05">Mayp</option>
+                <option value="06">Junio</option>
+                <option value="07">Julio</option>
+                <option value="08">Agosto</option>
+                <option value="09">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+            </select>
+            <select>
+                <option value="20"> 2020</option>
+                <option value="21"> 2021</option>
+                <option value="20"> 2022</option>
+                <option value="21"> 2023</option>
+                <option value="20"> 2024</option>
+                <option value="21"> 2025</option>
+            </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  function obtenerInfo(variable){
+    var datos = variable.split(",")
+    var inputId = document.getElementById('idTarjeta');
+    var nombreId = document.getElementById('nameTarjeta');
+    var tarjeta = document.getElementById('tarjeta');
+    inputId.value = datos[0];
+    nombreId.value = datos[1] + " "+datos[2];
+    tarjeta.value = datos[7];
+    console.log(datos[0]);
+  }
+  function mostrarEntrenador(opcion){
+    valor = document.getElementById('rol').value;
+    if (valor != "Cliente"){
+      document.getElementById('entrenador').style = "display:none";
+      document.getElementById('labelEntrenador').style = "display:none";
+      document.getElementById('entrenador').value = "";
+      }
+    else{
+      document.getElementById('entrenador').style = "display:block";
+      document.getElementById('labelEntrenador').style = "display:block";
+    }
+  }
+ </script>
+ 
 {%endblock%}

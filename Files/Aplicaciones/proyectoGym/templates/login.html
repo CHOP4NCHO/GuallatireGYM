@@ -2,19 +2,11 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-{{mensaje}}
 <div style="width:500px; height: 500px; display:block;" class="container justify-content-center">
     <div class="card">
   <div class="tab-content">
     <div class="card-body" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-      {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>{{message}}</strong> 
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      {% endfor %}
-      {% endif %}
+
         <h1 class="card-title"style="margin-bottom:50px;">Login</h1>
         <form action="/login/" method ="POST"> {% csrf_token %}
         <!-- Email input -->

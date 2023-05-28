@@ -24,6 +24,6 @@ class Usuarios(models.Model):
     activo = models.BooleanField(default=True)
 
     def __str__(self):
-        text = "{0} {1} {2} {3} {4} {5}"
-        return text.format(self.idUsuario, self.nombre, self.apellido,self.contraseña,self.correo,self.rol,self.entrenador)
+        text = "{0},{1},{2},{3},{4},{5},{6},{7}"
+        return text.format(self.idUsuario,self.nombre, self.apellido,self.contraseña,self.correo,self.rol,self.entrenador,self.tarjeta)
         
