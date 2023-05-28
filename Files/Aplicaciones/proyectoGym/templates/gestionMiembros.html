@@ -1,73 +1,101 @@
-{% extends "./base.html"%}
-{% block title%} Gestion de miembros {%endblock%}
-
+{% extends "./base.html" %}
+{% block title%} Gestion de miembros {% endblock %}
+<link rel="stylesheet" href="../static/css/gestionMiembro.css">
 {% block body %}
-<div class ="row">
-    <div class = "col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-success alert-dismissible">
-            <button type = "button" class="btn-close" aria-label="Close"data-dismiss="alert">&times;</button>
-            <strong class="text-dark">{{message}}</strong>
-        </div>
-        {% endfor %}
-        {% endif %}
-        <h2>Gestion de miembros</h2>
-        <div class ="card">
-            <div class ="card-body"></div>
-            <form action="/registrarUsuario/" method="POST">{% csrf_token %}
-                <div class="mb-3">
-                    <input type="text" name="nombre" class ="form-control" placeholder="Nombre">
-                </div>
-                <div class="mb-3">
-                    <input type="text" name="apellido" class="form-control" placeholder="Apellido">
-                </div>
-                <div class="mb-3">
-                    <input type="email" name="correo" class="form-control" placeholder="Correo">
-                </div>
-                <div class="mb-3">
-                    <input type="text" name="rol"class="form-control" placeholder="Rol">
-                </div>
-                <div class="mb-3">
-                    <input type="password" name="contraseña" class="form-control" placeholder="Contraseña">
-                </div>
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-success btn-block ">Registrar</button>
-                </div>
-            </form>
-        </div>
+<div class="d-inline-block">
+    <h1>Miembros</h1>
+</div>
+<form action="/registrarUsuario/" method="POST"> {%csrf_token%}
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Nombres</label>
+        <input type="text" class="form-control" name="nombre" placeholder="Nombres">
+      </div>
+      <div class="form-group col-md-6">
+        <label>Apellido</label>
+        <input type="text" class="form-control" name="apellido"placeholder="Apellido">
+      </div>
     </div>
-    <div class = "col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <h2>Miembros</h2>
+    <div class="form-group">
+      <label for="inputAddress">Rut</label>
+      <input type="text" class="form-control"name="rut" placeholder="1.111.111-1">
+    </div>
+    <div class="form-group">
+      <label for="inputAddress2">Correo</label>
+      <input type="email" class="form-control" name="correo" placeholder="ejemplo@mail.com">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCity">Contraseña</label>
+        <input type="" class="form-control" name="contraseña">
+      </div> 
+      <div class="form-group col-md-4">
+        <label for="inputState">Rol</label>
+        <select name="rol" class="form-control">
+          <option selected>Selecione un rol</option>
+          <option value ="Cliente">Cliente</option>
+          <option value ="Entrenador">Entrenador</option>
+        </select>
+      </div>
+      <br>
+      <div class="form-group col-md-2">
+        <label>Entrenador asignado</label>
+        <select name="entrenador" id="entrenador" class="form-select">
+        {%for i in Entrenadores%}
+        <option value="cualquiera">{{i.nombre}}</option>
+        {%endfor%}
+        </select>
+        <button type="submit" class="btn btn-dark" style="margin-top:20px;">Agregar miembro</button><br><br><br>
+      </div>
+    </div>
+  </form>
+<div class="d-xxl-flex justify-content-center">
+    <div class = "col-xl-12 col-xl-6 col-xl-8 col-xl-8">
         <div class ="table-responsive">
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-bordered">
+                <thead class="table-dark">
                     <tr>
                         <th>Id</th>
+                        <th>Rut</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Correo</th>
                         <th>Rol</th>
                         <th>Contraseña</th>
+                        <th>Entrenador</th>
+                        <th>Tarjeta</th>
+                        <th>Estado</th>
                         <th colspan="2">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for u in Usuarios %}
-                    <tr>
+                    {%for u in Usuarios%}
+                    {%if u.activo%}
+                    <tr class="table-success">
+                    {%else%}
+                    <tr class="table-danger">
+                    {%endif%}
                         <td>{{u.idUsuario}}</td>
+                        <td>{{u.rut}}</td>
                         <td>{{u.nombre}}</td>
-                        <td>{{u.apelllido}}</td>
+                        <td>{{u.apellido}}</td>
                         <td>{{u.correo}}</td>
                         <td>{{u.rol}}</td>
                         <td>{{u.contraseña}}</td>
                         <td>{{u.entrenador}}</td>
-                        <td><a href="edicionUsuario/{{u.idUsuario}}" class="btn btn-info">Editar</a></td>
-                        <td><a href="eliminarUsuario/{{u.idUsuario}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                        <td>{{u.tarjeta}}</td>
+                        {%if u.activo%}
+                        <td>Activo</td>
+                        {%else%}
+                        <td>Inactivo</td>
+                        {%endif%}
+                        <td><a href="/edicionUsuario/{{u.idUsuario}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="/eliminarUsuario/{{u.idUsuario}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
                     </tr>
-                    {% endfor %}
+                    {%endfor%}
                 </tbody>
         </div>
     </div>
 </div>
-{% endblock %}
+
+{%endblock%}

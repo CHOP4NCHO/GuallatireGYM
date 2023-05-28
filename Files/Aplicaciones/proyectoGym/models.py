@@ -13,14 +13,17 @@ from django.contrib.auth.hashers import *
 
 class Usuarios(models.Model):
     idUsuario = models.AutoField(primary_key=True)
+    rut = models.CharField(max_length=30,blank=True)
     nombre = models.CharField(max_length=50)
-    apelllido = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100)
     contraseña = models.CharField(max_length=40)
     correo = models.CharField(max_length=100)
     rol = models.CharField(max_length=30)
     entrenador = models.CharField(max_length=100,blank=True)
+    tarjeta = models.CharField(max_length=100,blank=True)
+    activo = models.BooleanField(default=True)
 
     def __str__(self):
         text = "{0} {1} {2} {3} {4} {5}"
-        return text.format(self.idUsuario, self.nombre, self.apelllido,self.contraseña,self.correo,self.rol,self.entrenador)
+        return text.format(self.idUsuario, self.nombre, self.apellido,self.contraseña,self.correo,self.rol,self.entrenador)
         

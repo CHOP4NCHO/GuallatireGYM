@@ -8,7 +8,7 @@
         <div class ="card">
             <div class ="card-body"></div>
             <form action="/editarUsuario/" method="POST">{% csrf_token %}
-                <div class="mb-3">
+                <div class="mb-3" style="display:none;">
                     <input type="text" name="id" value="{{usuario.idUsuario}}" readonly class="form-control" >
                 </div>
                 <div class="mb-3">
@@ -21,7 +21,11 @@
                     <input type="email" name="correo" class="form-control" value="{{usuario.correo}}"placeholder="Correo">
                 </div>
                 <div class="mb-3">
-                    <input type="text" name="rol" class="form-control"value="{{usuario.rol}}" placeholder="Rol">
+                    <select name="rol" class="form-control">
+                        <option selected>{{usuario.rol}}</option>
+                        <option value ="Cliente">Cliente</option>
+                        <option value ="Entrenador">Entrenador</option>
+                      </select>
                 </div>
                 <div class="mb-3">
                     <input type="password" name="contraseña"value="{{usuario.contraseña}}" class="form-control">
