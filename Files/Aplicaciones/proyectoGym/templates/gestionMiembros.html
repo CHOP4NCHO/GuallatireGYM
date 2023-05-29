@@ -1,37 +1,43 @@
 {% extends "./base.html" %}
 
 {%block title%} Gestion de miembros {% endblock %}
-{%if usuario.rol != "Administrador"%}
-<h1>NO PODI ERI PERKIN</h1>
-{%else%}
+
 <link rel="stylesheet" href="../static/css/gestionMiembro.css">
 {% block body %}
 <div class="d-inline-block">
-    <h1>Miembros</h1>
+    <h1 style="color:white;">Miembros</h1>
 </div>
-<form action="/registrarUsuario/" method="POST"> {%csrf_token%}
+{%if tipo == "warning" %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{Message}}</strong>
+  <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{%endif%}
+<form style ="color:white;"action="/registrarUsuario/" method="POST"> {%csrf_token%}
     <div class="form-row">
       <div class="form-group col-md-6">
         <label>Nombres</label>
-        <input type="text" class="form-control" name="nombre" placeholder="Nombres">
+        <input type="text" class="form-control" name="nombre" placeholder="Nombres" style="max-width: 500px;">
       </div>
       <div class="form-group col-md-6">
         <label>Apellido</label>
-        <input type="text" class="form-control" name="apellido"placeholder="Apellido">
+        <input type="text" class="form-control" name="apellido"placeholder="Apellido" style="max-width: 500px;">
       </div>
     </div>
     <div class="form-group">
       <label for="inputAddress">Rut</label>
-      <input type="text" class="form-control"name="rut" placeholder="1.111.111-1">
+      <input type="text" class="form-control"name="rut" placeholder="1.111.111-1" style="max-width: 500px;">
     </div>
     <div class="form-group">
       <label for="inputAddress2">Correo</label>
-      <input type="email" class="form-control" name="correo" placeholder="ejemplo@mail.com">
+      <input type="email" class="form-control" name="correo" placeholder="ejemplo@mail.com" style="max-width: 500px;">
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputCity">Contraseña</label>
-        <input type="" class="form-control" name="contraseña">
+        <input type="password" class="form-control" name="contraseña" style="max-width: 500px;">
       </div> 
       <div class="form-group col-md-4">
         <label for="inputState">Rol</label>
@@ -66,7 +72,6 @@
                         <th>Apellido</th>
                         <th>Correo</th>
                         <th>Rol</th>
-                        <th>Contraseña</th>
                         <th>Entrenador</th>
                         <th>Tarjeta</th>
                         <th>Estado</th>
@@ -86,7 +91,6 @@
                         <td>{{u.apellido}}</td>
                         <td>{{u.correo}}</td>
                         <td>{{u.rol}}</td>
-                        <td>{{u.contraseña}}</td>
                         <td>{{u.entrenador}}</td>
                         <td><button id="{{u.tarjeta}}"type="button" onclick="obtenerInfo('{{u}}')" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Modificar</button></td>
                         {%if u.activo%}
@@ -102,11 +106,11 @@
     </div>
 </div>
 {%endfor%}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div style="color:black;"class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Informacion de tarjeta</h5>
+        <h5 class="modal-title" style="color: black;" id="exampleModalLabel">Informacion de tarjeta</h5>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -187,5 +191,5 @@
   }
  </script>
  {%endblock%}
- {%endif%}
+ 
 

@@ -8,7 +8,16 @@
     <div class="card-body" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
         <h1 class="card-title"style="margin-bottom:50px;">Login</h1>
         <form action="/login/" method ="POST"> {% csrf_token %}
-        
+        {%if Mensaje%}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>
+            {{Mensaje}}
+          </strong>
+          <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {%endif%}
         <div class="form-outline mb-4">
           <input type="email" id="loginName" name="correo"class="form-control" />
           <label class="form-label" for="loginName">Correo</label>

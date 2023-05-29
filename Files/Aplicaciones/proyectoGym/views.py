@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.csrf import csrf_protect
- 
+from django.contrib.auth.hashers import * 
+from itertools import cycle
 
 # Create your views here.
 def home(request):           
@@ -25,45 +26,45 @@ def manage(request):
         return render(request, "gestionMiembros.html",{"Usuarios":usuarios,"Entrenadores":entrenadores})
 
 def showLogin(request):
-        try:
-                if request.method == "GET":
-                        return render(request,"login.html")
-                else:
-                        correo = request.POST['correo']
-                        contraseña = request.POST['contraseña']
-                        usuario = Usuarios.objects.get(correo=correo,contraseña=contraseña)
-                        if (usuario.rol == "Cliente"):
-                                print("incial home")
-                                USER = usuario.nombre
-                                return HomeView(USER).retorno(request)
-                        elif (usuario.rol == "Entrenador"):
-                                nombreEntrenador = usuario.nombre
-                                clientes = Usuarios.objects.filter(entrenador = nombreEntrenador)
-                                return render(request,"clientesEntrenador.html",{"Clientes":clientes})
-                        elif (usuario.rol == "Administrador"):
-                                usuarios = Usuarios.objects.all()
-                                return render(request,"gestionMiembros.html",{"Usuarios":usuarios,"Entrenadores":Usuarios.objects.filter(rol="Entrenador")})
-                        print("No va a ninguna parte")
-        except:
+        if request.method == "GET":
                 return render(request,"login.html")
-        
-def signup(request):
-        if (request.method == 'GET'):
-                return render(request, 'signup.html')
-        else:
-                if request.POST['contraseña1'] == request.POST['contraseña2']:
-                        #VERIFICAR Y REGISTRAR LA INFORMACION QUE TIENE UN USUARIO 
-                        usuario = User.objects.create_user(username=request.POST['correo'], password=request.POST['contraseña'])
-                        #login(request,usuario)
-                        #return render(request, 'home.html')
-                        ...
+                
+        correo = request.POST['correo']
+        contraseña = request.POST['contraseña'] 
+        if not Usuarios.objects.filter(correo=correo).exists():
+                message = "Credenciales incorrectas, intente nuevamente"
+                return render(request,"login.html",{"Mensaje":message})
+        usuario = Usuarios.objects.get(correo=correo)
+        if (check_password(contraseña,usuario.contraseña)):
+                if (usuario.rol == "Cliente"):
+                        USER = usuario
+                        return HomeView(USER.nombre).retorno(request)
+                elif (usuario.rol == "Entrenador"):
+                        nombreEntrenador = usuario.nombre
+                        clientes = Usuarios.objects.filter(entrenador = nombreEntrenador)
+                        return render(request,"clientesEntrenador.html",{"Clientes":clientes})
+                elif (usuario.rol == "Administrador"):
+                        usuarios = Usuarios.objects.all()
+                        return render(request,"gestionMiembros.html",{"Usuarios":usuarios,"Entrenadores":Usuarios.objects.filter(rol="Entrenador")})
+                print("No va a ninguna parte")
+        return redirect('/')
+                
+               
 
 def registrarUsuario(request):
         rut=request.POST['rut']
+        if not verificarRut(rut):
+                message = "SU RUT ES DE MENTIRA"
+                return render(request,'gestionMiembros.html',{"Usuarios":Usuarios.objects.all(),"Entrenadores":Usuarios.objects.filter(rol="Entrenador"),"Message":message,"tipo":"warning"})
         nombre = request.POST['nombre']
         apellido = request.POST['apellido']
         correo = request.POST['correo']
+        if Usuarios.objects.filter(correo=correo).exists():
+                message = "Ya existe el correo!!!"
+                return render(request,'gestionMiembros.html',{"Usuarios":Usuarios.objects.all(),"Entrenadores":Usuarios.objects.filter(rol="Entrenador"),"Message":message,"tipo":"warning"})
+
         contraseña= request.POST['contraseña']
+        contraseña =  make_password(contraseña)
         rol = request.POST['rol']
         try:
                 entrenador = request.POST['entrenador']
@@ -97,7 +98,6 @@ def editarUsuario(request):
         nombre = request.POST['nombre']
         apellido = request.POST['apellido']
         correo = request.POST['correo']
-        contraseña= request.POST['contraseña']
         rol = request.POST['rol']
         entrenador = request.POST['entrenador']
         if (entrenador == "..."):
@@ -107,7 +107,6 @@ def editarUsuario(request):
         usuario.nombre = nombre
         usuario.apellido = apellido
         usuario.correo = correo
-        usuario.contraseña = contraseña
         usuario.rol = rol
         usuario.entrenador = entrenador
         usuario.save()
@@ -139,4 +138,18 @@ def modificarTarjeta(request):
         usuario.save()
         return redirect('/gestionarMiembros/')
 
-
+def verificarRut(rut):
+        rut = rut.upper();
+        rut = rut.replace("-","").replace(".","")
+        aux = rut[:-1]
+        dv = rut[-1:]
+        revertido = map(int, reversed(str(aux)))
+        factors = cycle(range(2,8))
+        s = sum(d * f for d, f in zip(revertido,factors))
+        res = (-s)%11        
+        if str(res) == dv:
+                return True
+        elif dv=="K" and res==10:
+                return True
+        else:
+                return False
