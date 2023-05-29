@@ -1,40 +1,52 @@
 from django.shortcuts import render, redirect
+from django.views.generic import View
 from .models import Usuarios
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.csrf import csrf_protect
-
+ 
 
 # Create your views here.
-def home(request):
-        usuarios = Usuarios.objects.all()                                     # Para obtener todos los usuarios de la base de datos
-        return render(request, "login.html")                                   # Envia la lista a la siguiente vista
-
+def home(request):           
+        print("xd")                        # Para obtener todos los usuarios de la base de datos
+        return render(request, "home.html")                                 # Envia la lista a la siguiente vista
+# Para visualizar el home
+class HomeView(View):
+        def __init__(self,nombre):
+                self.nombre = nombre
+        def retorno(self,request):
+                return render(request, 'home.html', {"Usuarios":self.nombre})
+                
 def manage(request):
         usuarios = Usuarios.objects.all()  
-        entrenadores = Usuarios.objects.filter(rol="Entrenador")                               # Para obtener todos los usuarios de la base de datos
+        entrenadores = Usuarios.objects.filter(rol="Entrenador")                           # Para obtener todos los usuarios de la base de datos
         return render(request, "gestionMiembros.html",{"Usuarios":usuarios,"Entrenadores":entrenadores})
 
 def showLogin(request):
-        correo = request.POST['correo']
-        contraseña = request.POST['contraseña']
-        if request.method == "GET":
-                print("Porque este wea vino en formato GET?")
-        else:
-                print("Este metodo de formulario es POST")
-        usuario = Usuarios.objects.get(correo=correo,contraseña=contraseña)
-        if (usuario.rol == "Cliente"):
-                return render(request,'home.html',{"usuario":usuario})
-        elif (usuario.rol == "Entrenador"):
-                nombreEntrenador = usuario.nombre
-                clientes = Usuarios.objects.filter(entrenador = nombreEntrenador)
-                return render(request,"clientesEntrenador.html",{"Clientes":clientes})
-        elif (usuario.rol == "Administrador"):
-                usuarios = Usuarios.objects.all()
-                return render(request,"gestionMiembros.html",{"Usuarios":usuarios})
-        return redirect('/')
+        try:
+                if request.method == "GET":
+                        return render(request,"login.html")
+                else:
+                        correo = request.POST['correo']
+                        contraseña = request.POST['contraseña']
+                        usuario = Usuarios.objects.get(correo=correo,contraseña=contraseña)
+                        if (usuario.rol == "Cliente"):
+                                print("incial home")
+                                USER = usuario.nombre
+                                return HomeView(USER).retorno(request)
+                        elif (usuario.rol == "Entrenador"):
+                                nombreEntrenador = usuario.nombre
+                                clientes = Usuarios.objects.filter(entrenador = nombreEntrenador)
+                                return render(request,"clientesEntrenador.html",{"Clientes":clientes})
+                        elif (usuario.rol == "Administrador"):
+                                usuarios = Usuarios.objects.all()
+                                return render(request,"gestionMiembros.html",{"Usuarios":usuarios,"Entrenadores":Usuarios.objects.filter(rol="Entrenador")})
+                        print("No va a ninguna parte")
+        except:
+                return render(request,"login.html")
+        
 def signup(request):
         if (request.method == 'GET'):
                 return render(request, 'signup.html')
@@ -127,4 +139,4 @@ def modificarTarjeta(request):
         usuario.save()
         return redirect('/gestionarMiembros/')
 
-        
+
