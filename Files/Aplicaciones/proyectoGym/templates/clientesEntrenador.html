@@ -1,0 +1,39 @@
+{% extends "./base.html"%}
+{%block title%}Clientes{%endblock%}
+{%block body%}
+<div class="d-xxl-flex justify-content-center" style="margin-bottom: 200px;">
+    <div class = "col-xl-12 col-xl-6 col-xl-8 col-xl-8">
+        <div class ="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Rut</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for c in Clientes%}
+                    {%if c.activo%}
+                    <tr class="table-success">
+                    {%else%}
+                    <tr class="table-danger">
+                    {%endif%}
+                        <td>{{c.rut}}</td>
+                        <td>{{c.nombre}}</td>
+                        <td>{{c.apellido}}</td>
+                        <td>{{c.correo}}</td>
+                        {%if c.activo%}
+                        <td>Activo</td>
+                        {%else%}
+                        <td>Inactivo</td>
+                        {%endif%}
+                    </tr>
+                </tbody>
+        </div>
+    </div>
+</div>
+{%endfor%}
+{%endblock%}

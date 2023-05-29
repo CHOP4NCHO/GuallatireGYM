@@ -1,5 +1,9 @@
 {% extends "./base.html" %}
-{% block title%} Gestion de miembros {% endblock %}
+
+{%block title%} Gestion de miembros {% endblock %}
+{%if usuario.rol != "Administrador"%}
+<h1>NO PODI ERI PERKIN</h1>
+{%else%}
 <link rel="stylesheet" href="../static/css/gestionMiembro.css">
 {% block body %}
 <div class="d-inline-block">
@@ -182,5 +186,6 @@
     }
   }
  </script>
- 
-{%endblock%}
+ {%endblock%}
+ {%endif%}
+

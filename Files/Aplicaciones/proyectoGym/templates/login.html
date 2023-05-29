@@ -6,22 +6,17 @@
     <div class="card">
   <div class="tab-content">
     <div class="card-body" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-
         <h1 class="card-title"style="margin-bottom:50px;">Login</h1>
         <form action="/login/" method ="POST"> {% csrf_token %}
-        <!-- Email input -->
+        
         <div class="form-outline mb-4">
-          <input type="email" id="loginName" name="correo" placeholder="Juanperez@mail.com"class="form-control" />
+          <input type="email" id="loginName" name="correo"class="form-control" />
           <label class="form-label" for="loginName">Correo</label>
         </div>
-  
-        <!-- Password input -->
         <div class="form-outline mb-4">
           <input type="password" id="loginPassword" name="contraseña" class="form-control" />
           <label class="form-label" for="loginPassword">Contraseña</label>
         </div>
-  
-        <!-- 2 column grid layout -->
         <div class="row mb-4">
           <div class="col-md-6 d-flex justify-content-center">
             <!-- Checkbox -->

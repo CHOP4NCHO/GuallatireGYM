@@ -18,26 +18,22 @@ def manage(request):
         return render(request, "gestionMiembros.html",{"Usuarios":usuarios,"Entrenadores":entrenadores})
 
 def showLogin(request):
-        print("Function ShowLogin")
         correo = request.POST['correo']
         contraseña = request.POST['contraseña']
         if request.method == "GET":
                 print("Porque este wea vino en formato GET?")
         else:
                 print("Este metodo de formulario es POST")
-                try:         
-                        usuario = Usuarios.objects.get(correo=correo,contraseña=contraseña)
-                        print(usuario)
-                        if (usuario.rol == "Cliente"):
-                                return render(request,'home.html',{"usuario":usuario})
-                        elif (usuario.rol == "Entrenador"):
-                                return render(request,'home.html',{"usuario":usuario})
-                        elif (usuario.rol == "Administrador"):
-                                usuarios = Usuarios.objects.all()
-                                return render(request, "gestionMiembros.html",{"Usuarios":usuarios})
-                except:
-                        messages.error(request,"Este usuario no existe")
-                
+        usuario = Usuarios.objects.get(correo=correo,contraseña=contraseña)
+        if (usuario.rol == "Cliente"):
+                return render(request,'home.html',{"usuario":usuario})
+        elif (usuario.rol == "Entrenador"):
+                nombreEntrenador = usuario.nombre
+                clientes = Usuarios.objects.filter(entrenador = nombreEntrenador)
+                return render(request,"clientesEntrenador.html",{"Clientes":clientes})
+        elif (usuario.rol == "Administrador"):
+                usuarios = Usuarios.objects.all()
+                return render(request,"gestionMiembros.html",{"Usuarios":usuarios})
         return redirect('/')
 def signup(request):
         if (request.method == 'GET'):
@@ -46,7 +42,7 @@ def signup(request):
                 if request.POST['contraseña1'] == request.POST['contraseña2']:
                         #VERIFICAR Y REGISTRAR LA INFORMACION QUE TIENE UN USUARIO 
                         usuario = User.objects.create_user(username=request.POST['correo'], password=request.POST['contraseña'])
-                        login(request,usuario)
+                        #login(request,usuario)
                         #return render(request, 'home.html')
                         ...
 
