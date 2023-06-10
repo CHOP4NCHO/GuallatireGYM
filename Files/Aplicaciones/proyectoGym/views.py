@@ -54,24 +54,27 @@ def showLogin(request):
 def registrarUsuario(request):
         rut=request.POST['rut']
         if not verificarRut(rut):
-                message = "SU RUT ES DE MENTIRA"
+                message = "RUT inválido"
                 return render(request,'gestionMiembros.html',{"Usuarios":Usuarios.objects.all(),"Entrenadores":Usuarios.objects.filter(rol="Entrenador"),"Message":message,"tipo":"warning"})
         nombre = request.POST['nombre']
         apellido = request.POST['apellido']
         correo = request.POST['correo']
         if Usuarios.objects.filter(correo=correo).exists():
-                message = "Ya existe el correo!!!"
+                message = "Correo ya registrado"
                 return render(request,'gestionMiembros.html',{"Usuarios":Usuarios.objects.all(),"Entrenadores":Usuarios.objects.filter(rol="Entrenador"),"Message":message,"tipo":"warning"})
 
         contraseña= request.POST['contraseña']
         contraseña =  make_password(contraseña)
+        nro_tarjeta = request.POST['nro tarjeta']
+        fech_exp = request.POST['fecha vencimiento']
+        nombre_titular = request.POST['nombre del titular']
         rol = request.POST['rol']
         try:
                 entrenador = request.POST['entrenador']
         except MultiValueDictKeyError:
                 entrenador = ""
-        if(checkBlank([nombre,apellido,correo,contraseña,rol])):
-               messages.success(request,'Algun campo esta mal escrito')  
+        if(checkBlank([nombre,apellido,correo,contraseña,rol, nro_tarjeta, fech_exp, nombre_titular])):
+               messages.success(request,'Algun campo está vacío')  
         else:
                 usuario = Usuarios.objects.create(
                 rut = rut,
@@ -81,6 +84,9 @@ def registrarUsuario(request):
                 correo = correo,
                 rol = rol,
                 entrenador = entrenador,
+                nro_tarjeta = nro_tarjeta,
+                fech_exp = fech_exp,
+                nombre_titular = nombre_titular,
                 activo = True
         )
                 messages.success(request,'Usuario Ingresado')
