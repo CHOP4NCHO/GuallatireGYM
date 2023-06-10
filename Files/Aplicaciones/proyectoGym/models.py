@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.hashers import * 
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import datetime
 # Create your models here.
@@ -14,12 +15,11 @@ import datetime
 #ORM es para manipular la base de datos como si fuera una clase de POO
 
 class Usuarios(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     idUsuario = models.AutoField(primary_key=True)
     rut = models.CharField(max_length=30,blank=True)
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=100)
-    contraseña = models.CharField(max_length=40)
-    correo = models.CharField(max_length=100)
     rol = models.CharField(max_length=30)
     entrenador = models.CharField(max_length=100,blank=True)
     

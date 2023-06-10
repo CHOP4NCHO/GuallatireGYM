@@ -31,10 +31,11 @@ def showLogin(request):
                 
         correo = request.POST['correo']
         contraseña = request.POST['contraseña'] 
-        if not Usuarios.objects.filter(correo=correo).exists():
+        if not User.objects.filter(email=correo).exists():
                 message = "Credenciales incorrectas, intente nuevamente"
                 return render(request,"login.html",{"Mensaje":message})
-        usuario = Usuarios.objects.get(correo=correo)
+        usuario = User.objects.get(email=correo)
+        
         if (check_password(contraseña,usuario.contraseña)):
                 if (usuario.rol == "Cliente"):
                         USER = usuario
