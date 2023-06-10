@@ -89,7 +89,7 @@ def registrarUsuario(request):
                 nombre_titular = nombre_titular,
                 activo = True
         )
-                messages.success(request,'Usuario Ingresado')
+                messages.success(request,'Usuario registrado')
         return redirect('/gestionarMiembros/')
 
 def edicionUsuario(request,idUsuario):
