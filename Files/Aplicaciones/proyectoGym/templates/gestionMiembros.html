@@ -37,7 +37,7 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputCity">Contraseña</label>
-        <input type="password" class="form-control" name="contraseña" style="max-width: 500px;">
+        <input type="password" class="form-control" name="password" style="max-width: 500px;">
       </div> 
       <div class="form-group col-md-4">
         <label for="inputState">Rol</label>
@@ -60,6 +60,58 @@
       </div>
     </div>
   </form>
+  <div class="mb-3">
+    <form action="/filtrarPorColumna/" method="POST" id="filterForm"> {%csrf_token%}
+    <h2 style="color:white;"for="basic-url" class="form-label">Buscar</h2>
+    <div class="input-group">
+      {%if filtro %}
+      <input type="text" name="filtro"class="form-control"value="{{filtro}}">
+      {%else%}
+      <input type="text" name="filtro"class="form-control">
+      {%endif%}
+      {%if columna == "sin_filtro"%}
+      <select value ="{{columna}}" name="columna" id ="idSelected"class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <option selected value="sin_filtro">Sin filtro</option>
+        <option value="nombre">Nombre</option>
+        <option value="apellido">Apellido</option>
+        <option value="rut">Rut</option>
+        <option value="rol">Rol</option>
+      {%elif columna == "nombre"%}
+      <select value ="{{columna}}" name="columna" id ="idSelected"class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <option value="sin_filtro">Sin filtro</option>
+        <option selected value="nombre">Nombre</option>
+        <option value="apellido">Apellido</option>
+        <option value="rut">Rut</option>
+        <option value="rol">Rol</option>
+      {%elif columna == "apellido"%}
+      <select value ="{{columna}}" name="columna" id ="idSelected"class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <option value="sin_filtro">Sin filtro</option>
+        <option value="nombre">Nombre</option>
+        <option selected value="apellido">Apellido</option>
+        <option value="rut">Rut</option>
+        <option value="rol">Rol</option>
+      {%elif columna == "rut"%}
+      <select value ="{{columna}}" name="columna" id ="idSelected"class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <option value="sin_filtro">Sin filtro</option>
+        <option value="nombre">Nombre</option>
+        <option value="apellido">Apellido</option>
+        <option selected value="rut">Rut</option>
+        <option value="rol">Rol</option>
+      {%elif columna == "rol"%}
+      <select value ="{{columna}}" name="columna" id ="idSelected"class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <option value="sin_filtro">Sin filtro</option>
+        <option value="nombre">Nombre</option>
+        <option value="apellido">Apellido</option>
+        <option value="rut">Rut</option>
+        <option selected value="rol">Rol</option>
+      {%endif%}
+      </select>
+      <button class="btn btn-light">Filtrar</button>
+    </div>
+    </form>
+  </div>
+</div>
+<br>
 <div class="d-xxl-flex justify-content-center" style="margin-bottom: 200px;">
     <div class = "col-xl-12 col-xl-6 col-xl-8 col-xl-8">
         <div class ="table-responsive">
@@ -89,10 +141,10 @@
                         <td>{{u.rut}}</td>
                         <td>{{u.nombre}}</td>
                         <td>{{u.apellido}}</td>
-                        <td>{{u.user.email}}</td>
+                        <td>{{u.correo}}</td>
                         <td>{{u.rol}}</td>
                         <td>{{u.entrenador}}</td>
-                        <td><button id="{{u.tarjeta}}"type="button" onclick="obtenerInfo('{{u}}')" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Modificar</button></td>
+                        <td><button id="{{u.tarjeta}}"type="button" onclick="editarInfo('{{u}}')" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Modificar</button></td>
                         {%if u.activo%}
                         <td>Activo</td>
                         {%else%}
@@ -122,11 +174,11 @@
         </div>
           <div class="form-group owner">
             <label for="owner">Nombre cliente</label>
-            <input id ="nameTarjeta"type="text"class="form-control">
+            <input name = "nombreTitular"id ="nombreTitular"type="text"class="form-control">
         </div>
         <div class="form-group CVV">
             <label for="cvv">CVV</label>
-            <input type="text" class="form-control" id="cvv" placeholder="123">
+            <input type="text" class="form-control" id="cvv" placeholder="123" name="cvv">
         </div>
         <div class="form-group">
             <label>Numero de tarjeta</label>
@@ -134,27 +186,27 @@
         </div>
         <div class="form-group" id="expiration-date"><br>
             <label>Fecha de expiracion</label>
-            <select>
-                <option value="01">Enero</option>
-                <option value="02">Febrero </option>
-                <option value="03">Marzo</option>
-                <option value="04">Abril</option>
-                <option value="05">Mayp</option>
-                <option value="06">Junio</option>
-                <option value="07">Julio</option>
-                <option value="08">Agosto</option>
-                <option value="09">Septiembre</option>
-                <option value="10">Octubre</option>
-                <option value="11">Noviembre</option>
-                <option value="12">Diciembre</option>
+            <select name ="mes" id="mes">
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
             </select>
-            <select>
-                <option value="20"> 2020</option>
-                <option value="21"> 2021</option>
-                <option value="20"> 2022</option>
-                <option value="21"> 2023</option>
-                <option value="20"> 2024</option>
-                <option value="21"> 2025</option>
+            <select name="año" id="año">
+                <option value="20">2020</option>
+                <option value="21">2021</option>
+                <option value="20">2022</option>
+                <option value="21">2023</option>
+                <option value="20">2024</option>
+                <option value="21">2025</option>
             </select>
         </div>
       </div>
@@ -166,16 +218,25 @@
     </div>
   </div>
 </div>
+
+
 <script>
-  function obtenerInfo(variable){
-    var datos = variable.split(",")
+  //Esta funcion obtiene la informacion ya registrada de algun usuario y la muestra al editar
+  function editarInfo(variable){
+    var datos = variable.split(",");
+    console.log(datos)
     var inputId = document.getElementById('idTarjeta');
-    var nombreId = document.getElementById('nameTarjeta');
+    var nombreId = document.getElementById('nombreTitular');
     var tarjeta = document.getElementById('tarjeta');
+    var cvv = document.getElementById('cvv');
+    var mes = document.getElementById('mes');
+    var año = document.getElementById('año')
     inputId.value = datos[0];
-    nombreId.value = datos[1] + " "+datos[2];
-    tarjeta.value = datos[7];
-    console.log(datos[0]);
+    nombreId.value = datos[7];
+    tarjeta.value = datos[3];
+    mes.value = datos[4];
+    año.value = datos[5];
+    cvv.value = datos[6];
   }
   function mostrarEntrenador(opcion){
     valor = document.getElementById('rol').value;

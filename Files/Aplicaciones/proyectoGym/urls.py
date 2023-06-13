@@ -11,5 +11,6 @@ urlpatterns = [
     path('gestionarMiembros/',views.manage),
     path('login/',views.showLogin),
     path('modificarTarjeta/',views.modificarTarjeta),
+    path('filtrarPorColumna/',views.filtrarPorColumna),
     path('home/', views.home),
 ]
