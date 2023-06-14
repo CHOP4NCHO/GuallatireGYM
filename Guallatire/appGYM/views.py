@@ -12,7 +12,7 @@ def showLogout(request):
         "mensaje":"Se ha cerrado sesión"
     }
     logout(request)
-    return render(request,"login.html",contexto)
+    return redirect("../login/")
 def showLogin(request):
     contexto = {
         "formLogin":UserLoginForm,
@@ -73,22 +73,35 @@ def filtrarPorColumna(request):
         columna = request.POST['columna']
         match columna:
                 case "sin_filtro":
-                        usuarios_filtrados = Usuarios.objects.all()
+                        usuarios_filtrados = User.objects.all()
                         filtro = ""
                 case "nombre":
                         usuarios_filtrados= Usuarios.objects.filter(nombre__startswith=filtro)
+                        listaobjusuarios = []
+                        for u in usuarios_filtrados:
+                              listaobjusuarios.append(u.user)
                         ...
                 case "apellido":
                         usuarios_filtrados= Usuarios.objects.filter(apellido__startswith=filtro)
+                        listaobjusuarios = []
+                        for u in usuarios_filtrados:
+                              listaobjusuarios.append(u.user)
                         ...
                 case "rut":
                         usuarios_filtrados= Usuarios.objects.filter(rut__startswith=filtro)
+                        listaobjusuarios = []
+                        for u in usuarios_filtrados:
+                              listaobjusuarios.append(u.user)
                         ...
                 case "rol":
                         usuarios_filtrados= Usuarios.objects.filter(rol__startswith=filtro)
+                        listaobjusuarios = []
+                        for u in usuarios_filtrados:
+                              listaobjusuarios.append(u.user)
+
         entrenadores = Usuarios.objects.filter(rol="Entrenador")                         
 
-        return render(request, "managemembers.html",{"Usuarios":usuarios_filtrados,"Entrenadores":entrenadores,"filtro":filtro,"columna":columna})
+        return render(request, "managemembers.html",{"Users":listaobjusuarios,"Entrenadores":entrenadores,"filtro":filtro,"columna":columna})
 
 
 def editMembers(request,user_id):
