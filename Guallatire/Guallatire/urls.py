@@ -28,4 +28,5 @@ urlpatterns = [
     path('UsuarioEditado/',views.MembersEdited),
     path('eliminarUsuario/<user_id>',views.eliminarUsuario),
     path('filtrarPorColumna/',views.filtrarPorColumna),
+    path('modificarTarjeta/',views.modificarTarjeta)
 ]

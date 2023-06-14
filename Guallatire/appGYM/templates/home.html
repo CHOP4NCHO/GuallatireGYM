@@ -2,6 +2,20 @@
     <h1>HOME</h1>
     {% if user.is_active %}
     <h1 style="color:black;"classname="bienvenida-home">Bienvenido {{user.usuarios.nombre}}</h1>
+    {% if user.usuarios.rol == "Administrador" %}
+    <form method = "GET" action="../manageusers/">
+        <button >Gestionar Usuarios</button>
+    </form>
+    {% elif user.usuarios.rol == "Cliente" %}
+    
+    {% elif user.usuarios.rol == "Entrenador" %}
+    
+    {% endif %}
+
+
+
+
+
     {% else %}
     <h2>No has iniciado sesión,</h2>
     <form method = "GET" action="../login">

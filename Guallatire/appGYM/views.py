@@ -36,7 +36,7 @@ def showManageMembers(request):
         "tipo":"",
         "Message": "",
         "Entrenadores": Usuarios.objects.filter(rol="Entrenador"),
-        "Usuarios": User.objects.all(),
+        "Users": User.objects.all(),
     }
     if request.method == "GET":
         return render(request, "managemembers.html",contexto)
@@ -136,7 +136,21 @@ def eliminarUsuario(request,user_id):
         messages.success(request,"Usuario eliminado")
         return redirect('/manageusers/')
     
-
+def modificarTarjeta(request):
+        tarjeta = request.POST['tarjeta']
+        mesExpiracion= request.POST['mes']
+        añoExpiracion = request.POST['año']
+        nombre_titular = request.POST['nombreTitular']
+        cvvCode = request.POST['cvv']
+        id = request.POST['idTarjeta']
+        usuario = Usuarios.objects.get(user_id = id)
+        usuario.nro_tarjeta = tarjeta
+        usuario.mes_expiracion = mesExpiracion
+        usuario.año_expiracion = añoExpiracion
+        usuario.nombre_titular = nombre_titular
+        usuario.cvv = cvvCode
+        usuario.save()
+        return redirect('/manageusers/')
         
 
 

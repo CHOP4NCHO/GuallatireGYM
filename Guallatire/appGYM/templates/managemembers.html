@@ -25,7 +25,7 @@
 
 <link rel="stylesheet" href="../static/css/gestionMiembro.css">
 <div class="d-inline-block">
-    <h1 style="color:black;">Miembros</h1>
+    <h1 style="color:white;">Miembros</h1>
 </div>
 {% if user.usuarios.rol != "Administrador" %}
 <h2>NO SE PUEDE ENTRAR NO ERES ADMIN</h2>
@@ -40,7 +40,7 @@
   </button>
 </div>
 {%endif%}
-<form style ="color:black;"action="/manageusers/" method="POST"> {%csrf_token%}
+<form style ="color:white;"action="/manageusers/" method="POST"> {%csrf_token%}
     <div class="form-row">
       <div class="form-group col-md-6">
         <label>Nombres</label>
@@ -87,9 +87,9 @@
   </form>
   
   <div class="mb-3">
-    <form action="/filtrarPorColumna/" method="POST" id="filterForm"> 
-    {%csrf_token%}
-    <h2 style="color:black;"for="basic-url" class="form-label">Buscar</h2>
+    <form action="/filtrarPorColumna/" method="POST" id="filterForm"> {%csrf_token%}
+    
+    <h2 style="color:white;"for="basic-url" class="form-label">Buscar</h2>
     <div class="input-group">
       {%if filtro %}
       <input type="text" name="filtro"class="form-control"value="{{filtro}}">
@@ -158,7 +158,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for u in Usuarios %}
+                    {% for u in Users %}
                     {%if u.is_active %}
                     <tr class="table-success">
                     {%else%}
@@ -171,7 +171,7 @@
                         <td>{{u.email}}</td>
                         <td>{{u.usuarios.rol}}</td>
                         <td>{{u.usuarios.entrenador}}</td>
-                        <td><button id="{{u.tarjeta}}"type="button" onclick="editarInfo('{{u.user_id}}')" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Modificar</button></td>
+                        <td><button id="{{u.id}}"type="button" onclick="editarInfo('{{u.usuarios}}')" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Modificar</button></td>
                         {%if u.is_active %}
                         <td>Activo</td>
                         {%else%}
@@ -195,12 +195,13 @@
         </button>
       </div>
       <div class="modal-body">
+        {%csrf_token%}
         <form action="/modificarTarjeta/" method="POST"> {%csrf_token%}
           <div class="mb-3" style="display:none;">
             <input type="text" id ="idTarjeta"name="idTarjeta" value="" readonly class="form-control" >
         </div>
           <div class="form-group owner">
-            <label for="owner">Nombre cliente</label>
+            <label for="owner">Titular de la tarjeta </label>
             <input name = "nombreTitular"id ="nombreTitular"type="text"class="form-control">
         </div>
         <div class="form-group CVV">
@@ -246,7 +247,7 @@
   </div>
 </div>
 
-{% endif %}
+
 <script>
   //Esta funcion obtiene la informacion ya registrada de algun usuario y la muestra al editar
   function editarInfo(variable){
@@ -278,6 +279,11 @@
     }
   }
  </script>
- 
+ <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+ <script src="{% static 'js/gestionUsuario.js' %}"></script>
+{% endif %}
  
 
