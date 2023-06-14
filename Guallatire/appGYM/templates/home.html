@@ -7,6 +7,19 @@
         <button >Gestionar Usuarios</button>
     </form>
     {% elif user.usuarios.rol == "Cliente" %}
+        {{mensaje}}
+        {% if not user.usuarios.activo %}
+        <form method = "post" action="../registrarEntrada/{{user.id}}">
+            {%csrf_token%}
+        <button >Registrar Entrada</button>
+        </form>
+        {% else %}
+        <form method = "post" action="../registrarSalida/{{user.id}}">
+            {%csrf_token%}
+            <button >Registrar Salida</button>
+        </form>
+        {% endif %}
+    </form>
     
     {% elif user.usuarios.rol == "Entrenador" %}
     

@@ -33,7 +33,8 @@ class Usuarios(models.Model):
     año_expiracion = models.CharField(max_length=10,blank=True)
     nombre_titular =models.CharField("Nombre del titular", max_length=255, default='')
     cvv = models.CharField(max_length=4,blank=True)
-    activo = models.BooleanField(default=True)
+    hora = models.CharField(max_length=64,blank=True)
+    activo = models.BooleanField(default=False)
     
     USERNAME_FIELD = 'user.email'
 

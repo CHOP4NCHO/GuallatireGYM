@@ -28,5 +28,7 @@ urlpatterns = [
     path('UsuarioEditado/',views.MembersEdited),
     path('eliminarUsuario/<user_id>',views.eliminarUsuario),
     path('filtrarPorColumna/',views.filtrarPorColumna),
-    path('modificarTarjeta/',views.modificarTarjeta)
+    path('modificarTarjeta/',views.modificarTarjeta),
+    path('registrarEntrada/<idUsuario>',views.registrarEntrada),
+    path('registrarSalida/<idUsuario>',views.registrarSalida)
 ]

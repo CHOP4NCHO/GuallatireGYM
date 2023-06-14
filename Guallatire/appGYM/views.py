@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from datetime import datetime
 
 from .models import UserLoginForm,UsuariosRegisterForm, Usuarios
 
@@ -162,3 +163,27 @@ def showHome(request):
 
 def showUserManager(request):
     return render(request, "manageusers.html")
+
+def registrarSalida(request, idUsuario):
+        usuario = User.objects.get(id = idUsuario)
+        usuario.usuarios.activo = 0
+        usuario.usuarios.save()
+        usuario.save()
+        salida = datetime.now()
+        entrada = datetime.fromisoformat(usuario.usuarios.hora)
+        t = salida-entrada
+        mensaje = 'El tiempo transcurrido fue de %s segundos' %t
+        print(salida)
+        print()
+        print(mensaje)
+        return render(request,"home.html",{"Usuarios":usuario.usuarios.nombre, "Estado":usuario.usuarios.activo, "idUsuario":usuario.id, "mensaje":mensaje})
+
+def registrarEntrada(request, idUsuario):
+        entrada = datetime.now()
+        usuario = User.objects.get(id = idUsuario)
+        usuario.usuarios.activo = 1
+        usuario.usuarios.hora = entrada
+        usuario.usuarios.save()
+        usuario.save()
+        print(entrada)
+        return render(request,"home.html",{"Usuarios":usuario.usuarios.nombre, "Estado":usuario.usuarios.activo, "idUsuario":usuario.id})
