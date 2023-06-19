@@ -35,6 +35,10 @@ class Usuarios(models.Model):
     cvv = models.CharField(max_length=4,blank=True)
     hora = models.CharField(max_length=64,blank=True)
     activo = models.BooleanField(default=False)
+    sexo = models.CharField(max_length=64, blank=True)
+    peso = models.CharField(max_length=64, blank=True)
+    altura = models.CharField(max_length=64, blank=True)
+    imc = models.CharField(max_length=64, blank=True)
     
     USERNAME_FIELD = 'user.email'
 

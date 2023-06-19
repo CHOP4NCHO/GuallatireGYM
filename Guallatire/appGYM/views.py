@@ -25,8 +25,8 @@ def showLogin(request):
         post_passw = request.POST['password']
 
         user= authenticate(request,username=post_email, password=post_passw)
-        if user == None:
-            contexto["mensajeError"] = "Credenciales incorrectas!!"
+        if user == None or not user.is_active:
+            contexto["errorMessage"] = "Credenciales incorrectas o Usuario no activo!!"
             return render(request,"login.html",contexto)
         else:
             login(request,user)
@@ -49,6 +49,10 @@ def showManageMembers(request):
     entrenador = request.POST['entrenador']
     rut = request.POST['rut']
     rol = request.POST['rol']
+    sexo = request.POST['sexo']
+    imc = request.POST['imc']
+    altura = request.POST['altura']
+    peso = request.POST['peso']
         
             
     if User.objects.filter(email=correo).exists():
@@ -62,44 +66,48 @@ def showManageMembers(request):
         apellido=apellido,
         entrenador=entrenador,
         rut=rut,
-        rol=rol)
-
-            
+        rol=rol,
+        sexo=sexo,
+        imc=imc,
+        altura=altura,
+        peso=peso
+        )
     return render(request,"managemembers.html",contexto)
 
 
 def filtrarPorColumna(request):
         filtro = request.POST['filtro']  
         columna = request.POST['columna']
+        entrenadores = Usuarios.objects.filter(rol="Entrenador")  
+        listaobjusuarios = []
         match columna:
                 case "sin_filtro":
                         usuarios_filtrados = User.objects.all()
                         filtro = ""
+                        return render(request, "managemembers.html",{"Users":usuarios_filtrados,"Entrenadores":entrenadores,"filtro":filtro,"columna":columna})
                 case "nombre":
                         usuarios_filtrados= Usuarios.objects.filter(nombre__startswith=filtro)
-                        listaobjusuarios = []
+                        
                         for u in usuarios_filtrados:
                               listaobjusuarios.append(u.user)
                         ...
                 case "apellido":
                         usuarios_filtrados= Usuarios.objects.filter(apellido__startswith=filtro)
-                        listaobjusuarios = []
+                        
                         for u in usuarios_filtrados:
                               listaobjusuarios.append(u.user)
                         ...
                 case "rut":
                         usuarios_filtrados= Usuarios.objects.filter(rut__startswith=filtro)
-                        listaobjusuarios = []
                         for u in usuarios_filtrados:
                               listaobjusuarios.append(u.user)
                         ...
                 case "rol":
                         usuarios_filtrados= Usuarios.objects.filter(rol__startswith=filtro)
-                        listaobjusuarios = []
                         for u in usuarios_filtrados:
                               listaobjusuarios.append(u.user)
 
-        entrenadores = Usuarios.objects.filter(rol="Entrenador")                         
+                               
 
         return render(request, "managemembers.html",{"Users":listaobjusuarios,"Entrenadores":entrenadores,"filtro":filtro,"columna":columna})
 
@@ -118,12 +126,19 @@ def editMembers(request,user_id):
         return render(request, "edicionUsuario.html",{"usuario":usuario,"Entrenadores":entrenadores})
 
 def MembersEdited(request):
+    
     idUsuario = request.POST['id']
     nombre = request.POST['nombre']
     apellido = request.POST['apellido']
     correo = request.POST['email']
     rol = request.POST['rol']
     entrenador = request.POST['entrenador']
+    estado = request.POST['estado']
+    sexo = request.POST['sexo']
+    imc = request.POST['imc']
+    altura = request.POST['altura']
+    peso = request.POST['peso']
+
     if (entrenador == "..."):
         entrenador = ""
     #return (HttpResponse(f"{idUsuario},{nombre},{apellido},{correo},{rol},{entrenador}"))
@@ -136,6 +151,14 @@ def MembersEdited(request):
     user.username = correo
     usuario.rol = rol
     usuario.entrenador = entrenador
+    if estado == "0":
+        user.is_active = 0
+    else:
+        user.is_active = 1
+    usuario.sexo = sexo
+    usuario.altura =altura
+    usuario.imc = imc
+    usuario.peso = peso
     usuario.save()
     user.save()
     messages.success(request,"Usuario editado")
