@@ -20,7 +20,6 @@ class UserLoginForm(AuthenticationForm):
         help_texts = {k:"" for k in fields}
 
 
-
 class Usuarios(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     rut = models.CharField(max_length=30,blank=True)
@@ -28,17 +27,17 @@ class Usuarios(models.Model):
     apellido = models.CharField(max_length=100)
     rol = models.CharField(max_length=30)
     entrenador = models.CharField(max_length=100,blank=True)
-    nro_tarjeta = models.CharField("Número de tarjeta", max_length=16, default='0000000000000000')
-    mes_expiracion = models.CharField(max_length=10,blank=True)
-    año_expiracion = models.CharField(max_length=10,blank=True)
+    nro_tarjeta = models.CharField("Número de tarjeta", max_length=16, default='0000000000000000',null=True)
+    mes_expiracion = models.CharField(max_length=10,blank=True,null=True)
+    año_expiracion = models.CharField(max_length=10,blank=True,null=True)
     nombre_titular =models.CharField("Nombre del titular", max_length=255, default='')
-    cvv = models.CharField(max_length=4,blank=True)
-    hora = models.CharField(max_length=64,blank=True)
-    activo = models.BooleanField(default=False)
+    cvv = models.CharField(max_length=4,blank=True,null=True)
+    hora = models.CharField(max_length=64,blank=True,null=True)
+    activo = models.BooleanField(default=False,null=True)
     sexo = models.CharField(max_length=64, blank=True)
-    peso = models.CharField(max_length=64, blank=True)
-    altura = models.CharField(max_length=64, blank=True)
-    imc = models.CharField(max_length=64, blank=True)
+    peso = models.FloatField(max_length=64, blank=True,null=True)
+    altura = models.FloatField(max_length=64, blank=True,null=True)
+    imc = models.FloatField(max_length=64, blank=True,null=True)
     
     USERNAME_FIELD = 'user.email'
 
