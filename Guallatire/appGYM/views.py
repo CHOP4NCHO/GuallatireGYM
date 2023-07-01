@@ -34,10 +34,25 @@ def showLogin(request):
 
 def showPlanesEjercicio(request):
     contexto = {
+        "Planes": PlanDeEjercicio.objects.all()       
+    }
+    
+    return render(request,"revisarplanes.html",contexto)
+    
+        
+def crearPlanEjercicio(request):
+    contexto = {
         "Planes": PlanDeEjercicio.objects.all()      
     }
+    if request.method == "GET":
+        return render(request,"revisarplanes.html",contexto)
+    nombre = request.POST['nombre']
+    descripcion = request.POST['descripcion']
+    nivel = request.POST["nivel"]
+    nuevoplan = PlanDeEjercicio.objects.create(nombre=nombre,descripcion=descripcion,nivel=nivel)
+    nuevoplan.save()
     return render(request,"revisarplanes.html",contexto)
-
+         
 def modificarPlan(request):
     contexto = {
         "Planes": PlanDeEjercicio.objects.all()      

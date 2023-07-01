@@ -32,5 +32,6 @@ urlpatterns = [
     path('registrarEntrada/<idUsuario>',views.registrarEntrada),
     path('registrarSalida/<idUsuario>',views.registrarSalida),
     path('verplanes/',views.showPlanesEjercicio),
-    path('editarPlan/',views.modificarPlan)
+    path('editarPlan/',views.modificarPlan),
+    path('crearPlan/',views.crearPlanEjercicio)
 ]

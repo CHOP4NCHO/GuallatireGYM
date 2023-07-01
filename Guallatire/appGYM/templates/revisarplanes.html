@@ -15,6 +15,19 @@
     NIVEL={{planes.nivel}}<br>
     ---------------------------<br>
     {% endfor %}
+    <h1>CREAR PLAN</h1>
+    <form action="/crearPlan/" method="post">
+        {% csrf_token %}
+        <label for="owner"> Nombre Plan </label>
+        <input name = "nombre"id ="nombre"type="text"class="form-control"><br>
+        <label for="owner"> Descripcion Plan </label>
+        <input name = "descripcion"id ="descripcion"type="text"class="form-control"><br>
+        <label for="owner"> Nivel Plan </label>
+        <input name = "nivel"id ="nivel"type="text"class="form-control"><br>
+        <button type="submit" >CREAR PLAN</button>
+    </form>
+
+    <h1>EDITAR PLANES</h1>
     <form action="/editarPlan/" method="post">
         {% csrf_token %}
         <label for="owner"> ID DEL PLAN </label>
