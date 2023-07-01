@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from datetime import datetime
 
-from .models import UserLoginForm,UsuariosRegisterForm, Usuarios
+from .models import UserLoginForm,UsuariosRegisterForm, Usuarios, PlanDeEjercicio
 
 # Create your views here.
 def showLogout(request):
@@ -31,7 +31,33 @@ def showLogin(request):
         else:
             login(request,user)
             return redirect("../home/")
+
+def showPlanesEjercicio(request):
+    contexto = {
+        "Planes": PlanDeEjercicio.objects.all()      
+    }
+    return render(request,"revisarplanes.html",contexto)
+
+def modificarPlan(request):
+    contexto = {
+        "Planes": PlanDeEjercicio.objects.all()      
+    }
+    if request.method == "get":
+        return HttpResponse("holaxd")
+    else:
         
+        plan = PlanDeEjercicio.objects.get(id=request.POST['idplan'])
+        nuevonombre = request.POST['nombre']
+        nuevadesc = request.POST['descripcion']
+        nuevonivel = request.POST['nivel']
+        plan.nombre = nuevonombre
+        plan.descripcion = nuevadesc
+        plan.nivel = nuevonivel
+        plan.save()
+        return render(request,"revisarplanes.html",contexto)
+
+            
+
 def showManageMembers(request):
     contexto = {
         "tipo":"",

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLANES DE EJERCICIO</title>
+    
+</head>
+<body>
+    {{mensajeerror}}
+    {% for planes in Planes %}
+    ID={{planes.id}}<br>
+    NOMBRE={{planes.nombre}}<br>
+    DESCRIPCION={{planes.descripcion}}<br>
+    NIVEL={{planes.nivel}}<br>
+    ---------------------------<br>
+    {% endfor %}
+    <form action="/editarPlan/" method="post">
+        {% csrf_token %}
+        <label for="owner"> ID DEL PLAN </label>
+        <input name = "idplan"id ="idplan" class="form-control"><br>
+        <label for="owner"> NUEVO Nombre Plan </label>
+        <input name = "nombre"id ="nombre"type="text"class="form-control"><br>
+        <label for="owner"> NUEVA Descripcion Plan </label>
+        <input name = "descripcion"id ="descripcion"type="text"class="form-control"><br>
+        <label for="owner"> NUEVO Nivel Plan </label>
+        <input name = "nivel"id ="nivel"type="text"class="form-control"><br>
+        <button type="submit" >MODIFICAR PLAN</button>
+    </form>
+</body>
+</html>

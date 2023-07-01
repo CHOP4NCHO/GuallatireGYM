@@ -19,6 +19,10 @@ class UserLoginForm(AuthenticationForm):
         fields = ['email','password']
         help_texts = {k:"" for k in fields}
 
+class PlanDeEjercicio(models.Model):
+    nombre = models.CharField(max_length=64,blank=True,null=True)
+    descripcion = models.CharField(max_length=256,blank=True,null=True)
+    nivel = models.CharField(max_length=32,blank=True,null=True)
 
 class Usuarios(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
