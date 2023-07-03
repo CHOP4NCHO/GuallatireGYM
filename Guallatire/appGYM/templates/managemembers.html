@@ -125,6 +125,9 @@
             </div>
           </div>
         </form>
+        <form action="/verplanes/" method="POST"> {% csrf_token %} 
+          <button type="submit" class="btn btn-dark" style="margin-top:20px;">Gestionar planes</button><br><br><br>
+        </form>
         
       
   </div>
@@ -218,7 +221,6 @@
                     {%else%}
                     <tr class="table-danger">
                     {%endif%}
-                        
                         <td>{{u.id}}</td>
                         <td>{{u.usuarios.rut}}</td>
                         <td>{{u.usuarios.nombre}}</td>
@@ -226,14 +228,12 @@
                         <td>{{u.email}}</td>
                         <td>{{u.usuarios.rol}}</td>
                         <td>{{u.usuarios.entrenador}}</td>
-                        <td><button id="{{u.id}}"type="button" onclick="editarInfo('{{u.usuarios}}')" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Modificar</button></td>
-                        
+                        <td><button id="{{u.id}}"type="button" onclick="editarInfo('{{u.usuarios}}')" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Modificar</button></td>                        
                         {%if u.is_active %}
                         <td>Activo</td>
                         {%else%}
                         <td>Inactivo</td>
                         {%endif%}
-                      
                         <td><a href="/edicionUsuario/{{u.id}}" class="btn btn-info">Editar</a></td>
                         <td><a href="/eliminarUsuario/{{u.id}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
                     </tr>

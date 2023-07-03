@@ -19,6 +19,7 @@ from django.urls import path
 from appGYM import views
 
 urlpatterns = [
+    path('',views.showLogin),
     path('admin/', admin.site.urls),
     path('home/',views.showHome),
     path('login/',views.showLogin),
@@ -32,6 +33,7 @@ urlpatterns = [
     path('registrarEntrada/<idUsuario>',views.registrarEntrada),
     path('registrarSalida/<idUsuario>',views.registrarSalida),
     path('verplanes/',views.showPlanesEjercicio),
+    path('mostrarEditarPlan/<idPlan>',views.mostrarVistaEditarPlan),
     path('editarPlan/',views.modificarPlan),
     path('crearPlan/',views.crearPlanEjercicio)
 ]

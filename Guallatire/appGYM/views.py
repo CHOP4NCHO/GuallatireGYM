@@ -53,14 +53,17 @@ def crearPlanEjercicio(request):
     nuevoplan.save()
     return render(request,"revisarplanes.html",contexto)
          
+def mostrarVistaEditarPlan(request, idPlan):
+     plan = PlanDeEjercicio.objetcs.get(id =idPlan)
+     contexto = {
+          "plan": plan
+     }
+     return render(request, "editarPlan.html",plan)
+
 def modificarPlan(request):
-    contexto = {
-        "Planes": PlanDeEjercicio.objects.all()      
-    }
     if request.method == "get":
-        return HttpResponse("holaxd")
+        return HttpResponse("No se nada yo")
     else:
-        
         plan = PlanDeEjercicio.objects.get(id=request.POST['idplan'])
         nuevonombre = request.POST['nombre']
         nuevadesc = request.POST['descripcion']
@@ -69,7 +72,7 @@ def modificarPlan(request):
         plan.descripcion = nuevadesc
         plan.nivel = nuevonivel
         plan.save()
-        return render(request,"revisarplanes.html",contexto)
+        return render(request,"revisarplanes.html")
 
             
 
