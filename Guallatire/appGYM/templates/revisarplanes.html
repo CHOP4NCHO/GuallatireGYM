@@ -22,6 +22,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
+  {% if user.usuarios.rol != "Administrador" or user.usuarios.rol == "Entrenador" %}
+    <h2>NO SE PUEDE ENTRAR NO ERES ADMIN</h2>
+    <meta http-equiv = "refresh" content = "2; url = ../home/" />
+  {% else %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a id ="nav-bar"style="margin-left:10px;"class="navbar-brand"  href="/home/">Gimnasio Guallatire</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,4 +101,5 @@
     </div>
   </div>
 </body>
+{% endif %}
 </html>
