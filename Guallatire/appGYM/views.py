@@ -51,20 +51,24 @@ def crearPlanEjercicio(request):
     nivel = request.POST["nivel"]
     nuevoplan = PlanDeEjercicio.objects.create(nombre=nombre,descripcion=descripcion,nivel=nivel)
     nuevoplan.save()
-    return render(request,"revisarplanes.html",contexto)
+    return redirect('/verplanes/')
          
 def mostrarVistaEditarPlan(request, idPlan):
-     plan = PlanDeEjercicio.objetcs.get(id =idPlan)
+     plan = PlanDeEjercicio.objects.get(id =idPlan)
      contexto = {
           "plan": plan
      }
-     return render(request, "editarPlan.html",plan)
+     return render(request, "editarPlan.html",contexto)
 
 def modificarPlan(request):
-    if request.method == "get":
+    contexto = {
+         "Planes": PlanDeEjercicio.objects.all()
+    }
+    if request.method == "GET":
         return HttpResponse("No se nada yo")
     else:
-        plan = PlanDeEjercicio.objects.get(id=request.POST['idplan'])
+        idPlan = request.POST['idplan']
+        plan = PlanDeEjercicio.objects.get(id=idPlan)
         nuevonombre = request.POST['nombre']
         nuevadesc = request.POST['descripcion']
         nuevonivel = request.POST['nivel']
@@ -72,10 +76,15 @@ def modificarPlan(request):
         plan.descripcion = nuevadesc
         plan.nivel = nuevonivel
         plan.save()
-        return render(request,"revisarplanes.html")
-
-            
-
+        return redirect('/verplanes/')
+def eliminarPlan(request,idPlan):
+     contexto = {
+          "Planes" : PlanDeEjercicio.objects.all()
+     }
+     plan = PlanDeEjercicio.objects.get(id=idPlan)
+     plan.delete()
+     return redirect('/verplanes/')
+     
 def showManageMembers(request):
     contexto = {
         "tipo":"",

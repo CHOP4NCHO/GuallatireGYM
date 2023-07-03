@@ -1,8 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+    a:link, a:visited{
+                color:black;
+                text-decoration: none;
+    
+              }
+    #nav-bar:link, #nav-bar:visited{
+                  color:white;
+                text-decoration: none;
+
+    }
+  </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <title>PLANES DE EJERCICIO</title>
+    <title>PLANES DE EJERCICIO </title>
     {% load static %}
     <link rel="stylesheet" href="{% static './css/home.css'%}">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -10,30 +22,48 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a id ="nav-bar"style="margin-left:10px;"class="navbar-brand"  href="/home/">Gimnasio Guallatire</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+    </div>
+    <a  style="background-color: blue;"class = "btn-r" href="../logout">Cerrar Sesión</a> 
+  </nav>
+  
+<div class="container-fluid" style="margin-top:20px;">
     {{mensajeerror}}
         <h1 style="color:white;">Planes de ejercicios</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+          Crear plan
+        </button>
         <br><br>    
         {% for plan in Planes%}
-        <div class="card " style="width: 40rem;margin-left: 30px;">
-        <div class="list-group">
+        <div class="card" style="width: 40rem;margin-left: 30px;">
+        <div class="list-group ">
             <nav class="navbar navbar-expand-xxl  navbar-light bg-light">
-            <a style="padding-right: 70%;" class="navbar-brand" href="#">{{plan.nombre}}</a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-outline-success my-2 my-sm-0" id ="{{plan.id}}"type="submit"><a href="mostrarEditarPlan/{{plan.id}}">Editar</a></button>
-                  </form>     
+            <a style="padding-right: 50%;" class="navbar-brand ">&nbsp;&nbsp;{{plan.nombre}}</a>
         </nav>
-            <button type="button" class="list-group-item list-group-item-action">{{plan.nivel}}</button>
+            <button type="button" class="list-group-item list-group-item-action" >{{plan.nivel}}</button>
             <button type="button" class="list-group-item list-group-item-action">{{plan.descripcion}}</button>
-                </div>      
-            </div>
-        </div>
+                </div>
+        
+                {%if user.is_superuser or user.usuarios.rol == "Administrador" %}  
+                <li class="list-group-item">
+                  <br>
+                    <button type="button" class="btn btn-outline-danger my-2 my-sm-0" style="margin-left: 1px;"><a href="eliminarPlan/{{plan.id}}">Eliminar</a></button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" id =""type="submit"><a href="mostrarEditarPlan/{{plan.id}}">Editar</a></button> 
+                  </div>
+                    {% endif %}
+                  </div>
+                  <br>
+                </li>    
         <br><br>
         {% endfor %}
-        
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-    Crear plan
-  </button>
+      
   <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -51,30 +81,20 @@
                 <label for="owner"> Descripcion Plan </label>
                 <input name = "descripcion"id ="descripcion"type="text"class="form-control"><br>
                 <label for="owner"> Nivel Plan </label>
-                <input name = "nivel"id ="nivel"type="text"class="form-control"><br>
+                <select class="form-control"name="nivel" id="">
+                  <option value="Bajo">Bajo</option>
+                  <option value="Intermedio">Intermedio</option>
+                  <option value="Avanzado">Avanzado</option>
+                  <option value="Experto">Experto</option>
+                </select>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Crear</button>
+            <button type="submit" class="btn btn-primary">Crear</button>
         </form>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
-    
-    
-    <h1>EDITAR PLANES</h1>
-    <form action="/editarPlan/" method="post">
-        {% csrf_token %}
-        <label for="owner"> ID DEL PLAN </label>
-        <input name = "idplan"id ="idplan" class="form-control"><br>
-        <label for="owner"> NUEVO Nombre Plan </label>
-        <input name = "nombre"id ="nombre"type="text"class="form-control"><br>
-        <label for="owner"> NUEVA Descripcion Plan </label>
-        <input name = "descripcion"id ="descripcion"type="text"class="form-control"><br>
-        <label for="owner"> NUEVO Nivel Plan </label>
-        <input name = "nivel"id ="nivel"type="text"class="form-control"><br>
-        <button type="submit" >MODIFICAR PLAN</button>
-    </form>
 </body>
 </html>

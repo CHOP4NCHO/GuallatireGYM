@@ -52,13 +52,18 @@
     <h1 style="color:white;"classname="bienvenida-home">Bienvenido {{user.usuarios.nombre}}</h1>
     {% if user.usuarios.rol == "Administrador" %}
     <form method = "GET" action="../manageusers/">
-        <button >Gestionar Usuarios</button>
+        <button type="submit" class="btn btn-dark" style="margin-top:20px;">Gestionar Usuarios</button>
+    </form>
+    <form action="/verplanes/" method="GET">
+      <button type="submit" class="btn btn-dark" style="margin-top:20px;">Gestionar planes</button><br><br><br>
     </form>
     {% elif user.usuarios.rol == "Cliente" %}
        <h2 style="color: chartreuse;">{{mensaje}}</h2> 
     
     {% elif user.usuarios.rol == "Entrenador" %}
-    
+    <form method = "GET" action="../verplanes/">
+      <button type="submit" class="btn btn-dark" style="margin-top:20px;">Planes de ejercicios</button>
+    </form>
     {% endif %}
 
     {% else %}
