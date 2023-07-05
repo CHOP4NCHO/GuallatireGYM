@@ -110,7 +110,7 @@ def showManageMembers(request):
             
     if User.objects.filter(email=correo).exists():
         contexto["errorMessage"] = "Ya existe un usuario con ese correo!!!"
-        return render(request,"createnewuser.html",contexto)
+        return render(request,"managemembers.html",contexto)
     User.objects.create_user(username=correo,email=correo,password=contraseña)
     user = User.objects.get(email=correo)
     user.usuarios = Usuarios.objects.create(
