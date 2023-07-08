@@ -1,0 +1,49 @@
+a:link, a:visited{
+    color: white;
+    text-decoration: none;
+
+  }
+
+a.btn-r:hover, button{
+    opacity: 75% ;
+}
+a.btn-r {
+    background-color: #0d6efd;
+}
+#nav-bar:link, #nav-bar:visited{
+    color:white;
+    text-decoration: none;
+}
+
+.btn-outline-danger{
+    background-color: red;
+}
+
+.btn-outline-success{
+    background-color: green;
+}
+
+td {
+    color: white;
+}
+
+
+
+.btn-outline-read {
+    background-color: #00BFFF;
+    --bs-btn-color: white;
+    --bs-btn-border-color: #00BFFF;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #00BFFF;
+    --bs-btn-hover-border-color: #00BFFF;
+    --bs-btn-focus-shadow-rgb: 25,135,84;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #00BFFF;
+    --bs-btn-active-border-color: #00BFFF;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #00BFFF;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #00BFFF;
+    --bs-gradient: none;
+}
+
