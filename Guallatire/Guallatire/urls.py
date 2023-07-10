@@ -24,6 +24,7 @@ urlpatterns = [
     path('home/',views.showHome),
     path('login/',views.showLogin),
     path('manageusers/',views.showManageMembers),
+    path('manageusers/crearUsuario/', views.showManageMembers2),
     path('logout/',views.showLogout),
     path('edicionUsuario/<user_id>',views.editMembers),
     path('UsuarioEditado/',views.MembersEdited),

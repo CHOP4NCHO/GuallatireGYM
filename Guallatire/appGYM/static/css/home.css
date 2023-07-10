@@ -52,3 +52,20 @@ body {
 .lower-buttons button{
     margin-left: 10px;
 }
+
+.filtro {
+    height: 38px;
+}
+
+
+.card{
+    color: white;
+    margin-top: 150px;
+    background-color: #2e3942;
+    box-shadow: 10px 5px 5px black;
+}
+
+.iniciar-sesion{
+    justify-content: center;
+}
+

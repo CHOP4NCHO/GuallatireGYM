@@ -27,7 +27,7 @@
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
-        <h2 style="color: white;";">Edicion de miembros</h2>
+        <h2 style="color: white;">Edicion de miembros</h2>
         <div class ="card">
             <div class ="card-body"></div>
             <form action="/UsuarioEditado/" method="POST">{% csrf_token %}
@@ -89,14 +89,18 @@
                 <br>
                 <div class="form-group mb-3">
                   <label>Estado</label>
+                  <!--No funciona porque en la tabla todo la columa activo está en 0-->
+                  {%if usuario.activo == False%}
                   <select name="estado" id="estado" class="form-select">
-                    
-
                     <option value="0">Inactivo</option>
                     <option value="1">Activo</option>
-                  
                   </select>
-                
+                  {%elif usuario.activo == True%}
+                  <select name="estado" id="estado" class="form-select">
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                  </select>
+                  {%endif%}
               </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-success btn-block ">Editar</button>

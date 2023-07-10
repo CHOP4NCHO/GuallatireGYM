@@ -84,7 +84,51 @@ def eliminarPlan(request,idPlan):
      plan = PlanDeEjercicio.objects.get(id=idPlan)
      plan.delete()
      return redirect('/verplanes/')
-     
+
+def showManageMembers2(request):
+    contexto = {
+        "tipo":"",
+        "Message": "",
+        "Entrenadores": Usuarios.objects.filter(rol="Entrenador"),
+        "Users": User.objects.all(),
+    }
+    if request.method == "GET":
+        return render(request, "crearUsuario.html",contexto)
+    
+    correo = request.POST['email']
+    contraseña = request.POST['password']
+    nombre = request.POST['nombre']
+    apellido = request.POST['apellido']
+    entrenador = request.POST['entrenador']
+    rut = request.POST['rut']
+    rol = request.POST['rol']
+    sexo = request.POST['sexo']
+    imc = request.POST['imc']
+    altura = request.POST['altura']
+    peso = request.POST['peso']
+        
+            
+    if User.objects.filter(email=correo).exists():
+        contexto["errorMessage"] = "Ya existe un usuario con ese correo!!!"
+        return render(request,"managemembers.html",contexto)
+    User.objects.create_user(username=correo,email=correo,password=contraseña)
+    user = User.objects.get(email=correo)
+    user.usuarios = Usuarios.objects.create(
+        user=user,
+        nombre=nombre,
+        apellido=apellido,
+        entrenador=entrenador,
+        rut=rut,
+        rol=rol,
+        sexo=sexo,
+        imc=imc,
+        altura=altura,
+        peso=peso,
+        activo=True
+        )
+    return render(request,"managemembers.html",contexto)
+
+
 def showManageMembers(request):
     contexto = {
         "tipo":"",

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      .btn-r{
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 315px;
+  padding: 12px 18px;
+  border-radius: 18px;
+  border: 0;
+  font-family: Gotham-Medium,sans-serif;
+  font-size: 17px;
+  line-height: 21px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+  </style>
+  {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static './css/home.css'%}">
+    <title>Crear usuario</title>
+</head>
+
+<body style="height: 1000px">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a style="margin-left:10px;"class="navbar-brand" href="/home/">Gimnasio Guallatire</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+          </ul>
+        </div>
+        <a  style="background-color: blue;"class = "btn-r" href="../logout">Cerrar Sesión</a> 
+      </nav>
+    <div class="container-fluid" style="margin-top:20px;">
+<link rel="stylesheet" href="../static/css/gestionMiembro.css">
+<div class="d-inline-block">
+    <h1 style="color:white;">Crear Usuario</h1>
+</div>
+{% if user.usuarios.rol != "Administrador" %}
+<h2>NO SE PUEDE ENTRAR NO ERES ADMIN</h2>
+<meta http-equiv = "refresh" content = "2; url = ../home/" />
+
+{% else %}
+{%endif%}
+{%if tipo == "warning" %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{Message}}</strong>
+  <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{%endif%}
+
+
+        <form style ="color:white;"action="/manageusers/crearUsuario" method="POST"> {%csrf_token%}
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Nombres</label>
+              <input type="text" class="form-control" name="nombre" placeholder="Nombres" style="max-width: 500px;" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Apellidos</label>
+              <input type="text" class="form-control" name="apellido"placeholder="Apellido" style="max-width: 500px;" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputAddress">Rut</label>
+            <input type="text" class="form-control"name="rut" placeholder="1.111.111-1" style="max-width: 500px;" required>
+          </div>
+          <div class="form-group">
+            <label for="inputAddress2">Correo</label>
+            <input type="email" class="form-control" name="email" placeholder="ejemplo@mail.com" style="max-width: 500px;" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputCity">Contraseña</label>
+              <input type="password" class="form-control" name="password" style="max-width: 500px;" required>
+            </div> 
+            <div class="form-group col-md-4">
+              <label for="inputState">Rol</label>
+              <select onchange="mostrarEntrenador(this)" id ="rol"name="rol" class="form-control" required>
+                <option selected >Selecione un rol</option>
+                <option value ="Cliente">Cliente</option>
+                <option value ="Entrenador">Entrenador</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputState">Sexo</label>
+              <select onchange="" id ="sexo"name="sexo" class="form-control" required>
+                <option value ="Cliente">Masculino</option>
+                <option value ="Entrenador">Femenino</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Altura<i>(en cm)</i></label>
+              <input type="number" class="form-control" name="altura"placeholder="" style="max-width: 500px;" min="0" max="230" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Peso<i>(en kg)</i></label>
+              <input type="number" class="form-control" name="peso"placeholder="" style="max-width: 500px;" min="0" max="400" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label>IMC</label>
+              <input type="number" class="form-control" name="imc"placeholder="" style="max-width: 500px;" min="0" max="50" required>
+            </div>
+            <br>
+            <div class="form-group col-md-2">
+              <label id="labelEntrenador">Entrenador asignado</label>
+              <select name="entrenador" id="entrenador" class="form-select">
+              <option value="">...</option>
+              {%for i in Entrenadores%}
+              <option value="{{i.nombre}}">{{i.nombre}}</option>
+              {%endfor%}
+              </select>
+              <button type="submit" class="btn btn-dark" style="margin-top:20px;">Agregar miembro</button><br><br><br>
+            </div>
+          </div>
+        </form>  
+  </div>
+</div>
+</body>
