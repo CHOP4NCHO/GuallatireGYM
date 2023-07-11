@@ -63,29 +63,29 @@
 
         <form style ="color:white;"action="/manageusers/crearUsuario" method="POST"> {%csrf_token%}
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 inputs-user">
               <label>Nombres</label>
               <input type="text" class="form-control" name="nombre" placeholder="Nombres" style="max-width: 500px;" required>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 inputs-user">
               <label>Apellidos</label>
               <input type="text" class="form-control" name="apellido"placeholder="Apellido" style="max-width: 500px;" required>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group inputs-user">
             <label for="inputAddress">Rut</label>
             <input type="text" class="form-control"name="rut" placeholder="1.111.111-1" style="max-width: 500px;" required>
           </div>
-          <div class="form-group">
+          <div class="form-group inputs-user">
             <label for="inputAddress2">Correo</label>
             <input type="email" class="form-control" name="email" placeholder="ejemplo@mail.com" style="max-width: 500px;" required>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-6 inputs-user">
               <label for="inputCity">Contraseña</label>
               <input type="password" class="form-control" name="password" style="max-width: 500px;" required>
             </div> 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-4 inputs-user">
               <label for="inputState">Rol</label>
               <select onchange="mostrarEntrenador(this)" id ="rol"name="rol" class="form-control" required>
                 <option selected >Selecione un rol</option>
@@ -93,7 +93,7 @@
                 <option value ="Entrenador">Entrenador</option>
               </select>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-4 inputs-user">
               <label for="inputState">Sexo</label>
               <select onchange="" id ="sexo"name="sexo" class="form-control" required>
                 <option value ="Cliente">Masculino</option>

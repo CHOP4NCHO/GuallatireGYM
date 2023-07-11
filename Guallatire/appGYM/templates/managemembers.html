@@ -123,7 +123,7 @@
 <div class="d-xxl-flex justify-content-center" style="margin-bottom: 200px;">
     <div class = "col-xl-12 col-xl-6 col-xl-8 col-xl-8">
         <div class ="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered tabla-members">
                 <thead class="table-dark">
                     <tr>
                         <th>Id</th>
@@ -135,7 +135,7 @@
                         <th>Entrenador</th>
                         <th>Tarjeta</th>
                         <th>Estado</th>
-                        <th colspan="2">Opciones</th>
+                        <th class="opciones-column" colspan="2">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,7 +148,7 @@
                     {%else%}
                     <tr class="table-danger">
                     {%endif%}
-                        <td>{{u.id}}</td>
+                        <td class="id-user">{{u.id}}</td>
                         <td>{{u.usuarios.rut}}</td>
                         <td>{{u.usuarios.nombre}}</td>
                         <td>{{u.usuarios.apellido}}</td>
@@ -161,8 +161,8 @@
                         {%else%}
                         <td>Inactivo</td>
                         {%endif%}
-                        <td><a href="/edicionUsuario/{{u.id}}" class="btn btn-info">Editar</a></td>
-                        <td><a href="/eliminarUsuario/{{u.id}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+                        <td class="opciones-column"><a href="/edicionUsuario/{{u.id}}" class="btn btn-info">Editar</a></td>
+                        <td class="opciones-column"><a href="/eliminarUsuario/{{u.id}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
                     </tr>
                 </tbody>
         </div>

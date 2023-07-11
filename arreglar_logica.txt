@@ -1,0 +1,2 @@
+1. Cuando la sesión se inicie el usuario no debera volver al login
+2. si modifico algun dato de una pagina, esa pagina debiera actualizarse y no mostrar el dato que borré aunque este no exista.

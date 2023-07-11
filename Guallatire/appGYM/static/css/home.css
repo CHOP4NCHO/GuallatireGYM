@@ -58,7 +58,7 @@ body {
 }
 
 
-.card{
+.contenedor-login{
     color: white;
     margin-top: 150px;
     background-color: #2e3942;
@@ -67,5 +67,30 @@ body {
 
 .iniciar-sesion{
     justify-content: center;
+}
+
+.inputs-user {
+    width: 31rem;
+}
+
+.tabla-members tbody td{
+    background-color: rgb(237, 237, 237);
+}
+
+.tabla-members{
+    font-size: 20px;
+    width: 90%; 
+    margin-left: 5%;
+
+}
+
+.id-user {
+    font-weight: bold;
+}
+.table-responsive table{
+    border-radius: 10px;
+}
+.opciones-column {
+    border: none;
 }
 
