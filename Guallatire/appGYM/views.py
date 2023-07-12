@@ -256,7 +256,7 @@ def MembersEdited(request):
     
     print(f"peso usuario ingresado: {peso}")
     print(f"peso usuario actual: {usuario.peso}")
-
+    print(f"estado usuario: {user.is_active}")
     if peso != '' and altura != '' and imc != '':
          usuario.peso = peso
          usuario.altura =altura

@@ -37,7 +37,7 @@
           Crear plan
         </button>
         <br><br>    
-        <table class="table table-bordered">
+        <table class="table table-bordered table-plans">
           <thead class="table-dark">
             <tr>
               <th>Id</th>
@@ -58,9 +58,9 @@
                   <td>
                       {{plan.nivel}}
                   </td>
-                  <td >
+                  <td>
                     {%if user.usuarios.rol != "Entrenador" %}  
-                      <li class="list-group-item">
+                      <li class="list-group-item botones-opciones">
                       <button type="button" class="btn btn-outline-read my-2 my-sm-0" href="#">Descripción</button>
                       <button type="button" class="btn btn-outline-danger my-2 my-sm-0" style="margin-left: 1px;"><a href="eliminarPlan/{{plan.id}}">Eliminar</a></button>
                       <button class="btn btn-outline-success my-2 my-sm-0" id =""type="submit"><a href="mostrarEditarPlan/{{plan.id}}">Editar</a></button> 

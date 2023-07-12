@@ -4,9 +4,10 @@ a:link, a:visited{
 
   }
 
-a.btn-r:hover, button{
+a.btn-r:hover{
     opacity: 75% ;
 }
+
 a.btn-r {
     background-color: #0d6efd;
 }
@@ -47,3 +48,49 @@ td {
     --bs-gradient: none;
 }
 
+
+table {
+    width: 55%;
+}
+
+body{
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(https://images.pexels.com/photos/669576/pexels-photo-669576.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+}
+
+
+.table-plans{
+    width: 90%; 
+    margin-left: 5%;
+}
+.botones-opciones{
+    text-align: center;
+}
+
+.btn{
+    margin-right: 20px;
+}
+
+.table-plans tbody td {
+    background-color: rgb(237, 237, 237);
+    color: #000;
+    font-size: 20px;
+    margin-left: 5%
+}
+
+th{
+    text-align: center;
+}
+
+.close{
+    background-color: transparent;
+    color: black;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+.close:hover {
+    transform: scale(1.2);
+  }
