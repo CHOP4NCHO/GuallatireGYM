@@ -89,13 +89,15 @@
                 <br>
                 <div class="form-group mb-3">
                   <label>Estado</label>
+                  <p>{{user.is_active}}</p>
                   <!--No funciona porque en la tabla todo la columa activo está en 0-->
                   {%if user.is_active == 0 %}
+                
                   <select name="estado" id="estado" class="form-select">
                     <option value="0">Inactivo</option>
                     <option value="1">Activo</option>
                   </select>
-                  {%elif user.is_active == 1%}
+                  {%elif user.is_active == 1 %}
                   <select name="estado" id="estado" class="form-select">
                     <option value="1">Activo</option>
                     <option value="0">Inactivo</option>

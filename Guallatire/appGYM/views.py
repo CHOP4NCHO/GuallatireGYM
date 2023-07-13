@@ -250,7 +250,7 @@ def MembersEdited(request):
     usuario.entrenador = entrenador
     if estado == "0":
         user.is_active = 0
-    else:
+    elif estado == "1":
         user.is_active = 1
     usuario.sexo = sexo
     
