@@ -49,17 +49,22 @@
     
     <h1 style="color: burlywood;">HOME</h1>
     {% if user.is_active %}
-    <h1 style="color:white;"classname="bienvenida-home">Bienvenido {{user.usuarios.nombre}}</h1>
+      <h1 style="color:white;"classname="bienvenida-home">Bienvenido {{user.usuarios.nombre}}</h1>
     {% if user.usuarios.rol == "Administrador" %}
-    <form method = "GET" action="../manageusers/">
+    <div class="container-content">
+      <h2>¿Qué desea hacer hoy?</h2>
+      <form class="form-admin" method = "GET" action="../manageusers/">
         <button type="submit" class="btn btn-dark" style="margin-top:20px;">Gestionar Usuarios</button>
-    </form>
-    <form action="/verplanes/" method="GET">
-      <button type="submit" class="btn btn-dark" style="margin-top:20px;">Gestionar planes</button><br><br><br>
-    </form>
+      </form>
+      <form class="form-admin" action="/verplanes/" method="GET">
+        <button type="submit" class="btn btn-dark" style="margin-top:20px;">Gestionar planes</button><br><br><br>
+      </form>
+    </div>
     {% elif user.usuarios.rol == "Cliente" %}
        <h2 style="color: chartreuse;">{{mensaje}}</h2> 
-    
+        <div class="container-content-client">
+
+        </div>
     {% elif user.usuarios.rol == "Entrenador" %}
     <form method = "GET" action="../verplanes/">
       <button type="submit" class="btn btn-dark" style="margin-top:20px;">Planes de ejercicios</button>
