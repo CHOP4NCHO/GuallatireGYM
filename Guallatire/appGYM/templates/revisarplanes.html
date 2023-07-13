@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-  {% if user.usuarios.rol != "Administrador" or user.is_super and user.usuarios.rol != "Entrenador" %}
+  {% if user.usuarios.rol != "Entrenador" and user.usuarios.rol != "Administrador"%}
     <h2>NO SE PUEDE ENTRAR NO ERES ADMIN</h2>
     <meta http-equiv = "refresh" content = "2; url = ../home/" />
   {% else %}
@@ -59,11 +59,14 @@
                       {{plan.nivel}}
                   </td>
                   <td>
-                    {%if user.usuarios.rol != "Entrenador" %}  
+                    {% if user.usuarios.rol == "Administrador"%}
                       <li class="list-group-item botones-opciones">
                       <button type="button" class="btn btn-outline-read my-2 my-sm-0" href="#">Descripción</button>
                       <button type="button" class="btn btn-outline-danger my-2 my-sm-0" style="margin-left: 1px;"><a href="eliminarPlan/{{plan.id}}">Eliminar</a></button>
                       <button class="btn btn-outline-success my-2 my-sm-0" id =""type="submit"><a href="mostrarEditarPlan/{{plan.id}}">Editar</a></button> 
+                    {%elif user.usuarios.rol == "Entrenador"%}
+                      <li class="list-group-item botones-opciones">
+                        <button type="button" class="btn btn-outline-read my-2 my-sm-0" href="#">Descripción</button> 
                     {% endif %}
                     </li> 
                   </td>
