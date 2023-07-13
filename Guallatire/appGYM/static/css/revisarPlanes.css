@@ -71,10 +71,14 @@ body{
 }
 
 .table-plans tbody td {
-    background-color: rgb(237, 237, 237);
-    color: #000;
+    background-color: #2e3942;
+    color: white;
     font-size: 20px;
     margin-left: 5%
+}
+
+.table-plans td, .table-plans th {
+    border: 1px solid #000;
 }
 
 th{
