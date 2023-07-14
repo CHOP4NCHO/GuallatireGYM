@@ -42,7 +42,6 @@
       <ul class="navbar-nav mr-auto">
       </ul>
     </div>
-    <a style="background-color: blue;" class="btn-r" href="../logout">Cerrar Sesión</a>
   </nav>
   <div class="container-fluid" style="margin-top:20px;">
     <link rel="stylesheet" href="../static/css/gestionMiembro.css">
@@ -146,4 +145,19 @@
         <button type="submit" class="btn btn-dark" style="margin-top:20px;">Agregar miembro</button><br><br><br>
       </form>
     </div>
+
+    <script>
+      function mostrarEntrenador(opcion){
+        valor = document.getElementById('rol').value;
+        if (valor != "Cliente"){
+          document.getElementById('entrenador').style = "display:none";
+          document.getElementById('labelEntrenador').style = "display:none";
+          document.getElementById('entrenador').value = "";
+          }
+        else{
+          document.getElementById('entrenador').style = "display:block";
+          document.getElementById('labelEntrenador').style = "display:block";
+        }
+      }
+    </script>
 </body>

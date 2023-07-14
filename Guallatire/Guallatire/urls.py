@@ -37,5 +37,6 @@ urlpatterns = [
     path('verplanes/mostrarEditarPlan/<idPlan>',views.mostrarVistaEditarPlan),
     path('editarPlan/',views.modificarPlan),
     path('crearPlan/',views.crearPlanEjercicio),
-    path('verplanes/eliminarPlan/<idPlan>',views.eliminarPlan)
+    path('verplanes/eliminarPlan/<idPlan>',views.eliminarPlan),
+    path('verplanes/verDescripcion/<idPlan>', views.verDescripcion),
 ]

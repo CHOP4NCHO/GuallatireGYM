@@ -61,12 +61,12 @@
                   <td>
                     {% if user.usuarios.rol == "Administrador"%}
                       <li class="list-group-item botones-opciones">
-                      <button type="button" class="btn btn-outline-read my-2 my-sm-0" href="#">Descripción</button>
+                        <button type="button" class="btn btn-outline-read my-2 my-sm-0" ><a href="verDescripcion/{{plan.id}}">Descripción</a></button> 
                       <button type="button" class="btn btn-outline-danger my-2 my-sm-0" style="margin-left: 1px;"><a href="eliminarPlan/{{plan.id}}">Eliminar</a></button>
                       <button class="btn btn-outline-success my-2 my-sm-0" id =""type="submit"><a href="mostrarEditarPlan/{{plan.id}}">Editar</a></button> 
                     {%elif user.usuarios.rol == "Entrenador"%}
                       <li class="list-group-item botones-opciones">
-                        <button type="button" class="btn btn-outline-read my-2 my-sm-0" href="#">Descripción</button> 
+                        <button type="button" class="btn btn-outline-read my-2 my-sm-0" ><a href="verDescripcion/{{plan.id}}">Descripción</a></button>  
                     {% endif %}
                     </li> 
                   </td>

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 from .models import UserLoginForm,UsuariosRegisterForm, Usuarios, PlanDeEjercicio
 
@@ -13,6 +14,7 @@ def showLogout(request):
     }
     logout(request)
     return redirect("../login/")
+
 def showLogin(request):
     contexto = {
         "formLogin":UserLoginForm,
@@ -32,6 +34,7 @@ def showLogin(request):
             login(request,user)
             return redirect("../home/")
 
+@login_required
 def showPlanesEjercicio(request):
     contexto = {
         "Planes": PlanDeEjercicio.objects.all()       
@@ -39,7 +42,7 @@ def showPlanesEjercicio(request):
     
     return render(request,"revisarplanes.html",contexto)
     
-        
+@login_required
 def crearPlanEjercicio(request):
     contexto = {
         "Planes": PlanDeEjercicio.objects.all()      
@@ -52,14 +55,15 @@ def crearPlanEjercicio(request):
     nuevoplan = PlanDeEjercicio.objects.create(nombre=nombre,descripcion=descripcion,nivel=nivel)
     nuevoplan.save()
     return redirect('/verplanes/')
-         
+
+@login_required   
 def mostrarVistaEditarPlan(request, idPlan):
      plan = PlanDeEjercicio.objects.get(id =idPlan)
      contexto = {
           "plan": plan
      }
      return render(request, "editarPlan.html",contexto)
-
+@login_required
 def modificarPlan(request):
     contexto = {
          "Planes": PlanDeEjercicio.objects.all()
@@ -77,6 +81,7 @@ def modificarPlan(request):
         plan.nivel = nuevonivel
         plan.save()
         return redirect('/verplanes/')
+
 def eliminarPlan(request,idPlan):
      contexto = {
           "Planes" : PlanDeEjercicio.objects.all()
@@ -123,10 +128,9 @@ def showManageMembers2(request):
         sexo=sexo,
         imc=imc,
         altura=altura,
-        peso=peso,
-        activo=True
+        peso=peso
         )
-    return render(request,"managemembers.html",contexto)
+    return redirect('../')
 
 
 def showManageMembers(request):
@@ -293,7 +297,7 @@ def modificarTarjeta(request):
         return redirect('/manageusers/')
         
 
-
+@login_required(login_url="/login/")
 def showHome(request):
     if request.method == "GET":
         return render(request,"home.html")
@@ -326,3 +330,10 @@ def registrarEntrada(request, idUsuario):
         usuario.save()
         print(entrada)
         return render(request,"home.html",{"Usuarios":usuario.usuarios.nombre, "Estado":usuario.usuarios.activo, "idUsuario":usuario.id})
+
+def verDescripcion(request, idPlan):
+     context = {
+        "plan" : PlanDeEjercicio.objects.get(id=idPlan)
+     }
+
+     return render(request, "verDescripcion.html", context)
